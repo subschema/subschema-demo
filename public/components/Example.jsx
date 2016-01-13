@@ -3,13 +3,15 @@
 import React, {Component} from 'react';
 import ReactDOM from 'react-dom';
 import Highlight from './Highlight.jsx';
-import Playground from 'component-playground';
+import Playground from 'component-playground/components/playground.jsx';
 import Subschema, {PropTypes, Form, ValueManager, loaderFactory, DefaultLoader, decorators} from 'Subschema';
 import CodeMirror from 'codemirror/mode/javascript/javascript.js';
 import cloneDeep from 'lodash/lang/cloneDeep';
 import ExampleLess from './Example.less';
 import each from 'lodash/collection/each';
-var {provide, listen} = decorators;
+import samples from 'subschema-test-support/samples';
+
+const {provide, listen} = decorators;
 
 function stringify(name, obj) {
 
@@ -76,18 +78,8 @@ export default class Example extends Component {
     }
 
     setup(props) {
-        var {schema, ...managed} = require('../samples/' + props.example);
-        var setupFile = managed.setupFile;
+        var {schema, ...managed} = samples[props.example];
         this.managed = managed;
-        if (setupFile) {
-            setupFile = setupFile.replace(/^\.\/?/, '');
-            managed.setupTxt = require('!raw!!../samples/' + setupFile)
-            managed.setupFunc = require('../sample-loader!../samples/' + setupFile)
-        } else {
-            managed.setupTxt = '';
-            managed.setupFunc = function () {
-            }
-        }
         var value = {}, errors = null;
         if (props.useData) {
             value = managed.data;

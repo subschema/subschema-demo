@@ -26,6 +26,8 @@ var config = {
             'fbjs': join('node_modules/fbjs'),
             'react': join('node_modules/react'),
             'Subschema': join('node_modules/subschema/dist/subschema-noreact.js'),
+            'component-playground': join('node_modules/component-playground/src'),
+//            'subschema-styles': join('node_modules/subschema/src/styles'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
         }
     },
@@ -42,6 +44,8 @@ var config = {
                 include: [
                     join('src'),
                     join('public'),
+                    join('node_modules/component-playground/src'),
+                    join('node_modules/subschema/src'),
                     isKarma ? join('test') : join('no_such_dir')
                 ]
             },
@@ -64,7 +68,7 @@ var config = {
             }]
 
     },
-    plugins:[
+    plugins: [
         new webpack.ProvidePlugin({
             CodeMirror: "codemirror",
             "window.CodeMirror": "codemirror"

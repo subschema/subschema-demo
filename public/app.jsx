@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
-import samples from './samples';
 import develop from './develop';
+import samples from 'subschema-test-support/samples';
 import Subschema, {ValueManager, Form, decorators, loaderFactory, DefaultLoader}  from 'Subschema';
 import schema from './schema.json';
 import Navigate from './components/Navigate.jsx';
@@ -10,7 +10,7 @@ import ULTemplate from './components/ULTemplate.jsx';
 import Link from './components/Link.jsx';
 import Main from './components/Main.jsx';
 import Example from './components/Example.jsx';
-import Index from './page/Index.jsx';
+import Index from './Index.jsx';
 import sample from './sample.less';
 
 import history from './location';
