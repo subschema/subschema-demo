@@ -9,9 +9,10 @@ var lifecycle = process.env['npm_lifecycle_event'];
 var isPrepublish = lifecycle === 'prepublish';
 var isKarma = process.env['NODE_ENV'] === 'test';
 var isTestDist = lifecycle === 'test-dist';
+console.log("prepublis?", isPrepublish);
 
-var config = {
-    devtool: (isPrepublish ? '#source-map' : "#eval"),
+module.exports =  {
+    devtool: (isPrepublish ? '#source-map' : "#inline-source-map"),
     devServer: {
         noInfo: true,
         hot: true,
@@ -27,8 +28,9 @@ var config = {
             'react': join('node_modules/react'),
             'Subschema': join('node_modules/subschema/dist/subschema-noreact.js'),
             'component-playground': join('node_modules/component-playground/src'),
-//            'subschema-styles': join('node_modules/subschema/src/styles'),
-            'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
+            'subschema-styles': join('node_modules/subschema/src/styles'),
+            'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js'),
+            'ReactDOM':'react-dom'
         }
     },
     stats: {
@@ -44,6 +46,7 @@ var config = {
                 include: [
                     join('src'),
                     join('public'),
+                    join('node_modules/subschema-project/src'),
                     join('node_modules/component-playground/src'),
                     join('node_modules/subschema/src'),
                     isKarma ? join('test') : join('no_such_dir')
@@ -79,5 +82,3 @@ var config = {
         'Subschema': true
     }] : null)
 };
-
-module.exports = config;

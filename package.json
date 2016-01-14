@@ -22,6 +22,7 @@
     "babel-preset-stage-0": "^6.3.13",
     "babel-relay-plugin-loader": "^0.6.1",
     "babel-standalone": "^1.0.0",
+    "browser-filesaver": "^1.1.0",
     "codemirror": "^5.10.0",
     "component-playground": "git+https://github.com/subschema/component-playground.git",
     "css-loader": "^0.23.1",
@@ -30,6 +31,7 @@
     "highlight": "^0.2.4",
     "history": "^1.17.0",
     "json-loader": "^0.5.4",
+    "jszip": "^2.5.0",
     "karma": "^0.13.17",
     "karma-chrome-launcher": "^0.2.2",
     "karma-firefox-launcher": "^0.1.7",
@@ -53,13 +55,14 @@
     "subschema": "^0.54.0",
     "subschema-routing": "^1.0.0",
     "url-loader": "^0.5.7",
+    "validate-npm-package-name": "^2.2.2",
     "webpack": "^1.12.9",
     "webpack-dev-server": "^1.14.0"
   },
   "scripts": {
     "karma": "NODE_ENV=test karma start --no-single-run --colors --auto-watch",
     "test": "NODE_ENV=test karma start --single-run --browsers Firefox",
-    "hot": "NODE_ENV=development webpack-dev-server --hot --inline --config ./webpack.config.js --entry ./public/app.jsx --output-filename=app.entry.js",
+    "hot": "NODE_ENV=development webpack-dev-server --hot --inline --devtool '#inline-souce-map' --config ./webpack.config.js --entry ./public/app.jsx --output-filename=app.entry.js",
     "demo": "NODE_ENV=production webpack -p --output-path .build --entry ./public/app.jsx --output-filename=app.[hash].js --config ./webpack.config.js",
     "dist": "NODE_ENV=production webpack --display-modules -p --output-path dist --entry ./src/index.js --output-library-target=umd --output-library-name GSuggests --output-filename=index.js --config ./webpack.config.js",
     "prepublish": "npm run demo"

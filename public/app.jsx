@@ -12,7 +12,6 @@ import Main from './components/Main.jsx';
 import Example from './components/Example.jsx';
 import Index from './Index.jsx';
 import sample from './sample.less';
-
 import history from './location';
 
 var loader = loaderFactory([DefaultLoader]);

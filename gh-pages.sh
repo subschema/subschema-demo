@@ -1,8 +1,8 @@
 #!/usr/bin/env bash
 #This script publishes the current p
 DIR=${PWD##*/}
-GH_DIR=${1:-"../${DIR}-gh-pages"}
-GH_REPO=${GH_REPO:-origin}
+GH_DIR="../subschema-gh-pages"
+GH_REPO="https://github.com/subschema/subschema.git"
 
 OPWD=$PWD
 HASH=

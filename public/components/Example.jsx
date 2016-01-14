@@ -10,6 +10,7 @@ import cloneDeep from 'lodash/lang/cloneDeep';
 import ExampleLess from './Example.less';
 import each from 'lodash/collection/each';
 import samples from 'subschema-test-support/samples';
+import DownloadButton from './DownloadButton.jsx';
 
 const {provide, listen} = decorators;
 
@@ -88,7 +89,6 @@ export default class Example extends Component {
             errors = managed.errors;
         }
         managed.schema = cloneDeep(schema);
-
 
 
         managed.valueManager = ValueManager(value, errors);
@@ -170,6 +170,10 @@ export default class Example extends Component {
                         context={context}
 
             />
+            <div className='btn-group'>
+                <DownloadButton type="page" data={this.managed} filename={`Example ${this.props.example}`}/>
+                <DownloadButton type="project" data={this.managed}  filename={`Example ${this.props.example}`}/>
+            </div>
         </div>
     }
 }
