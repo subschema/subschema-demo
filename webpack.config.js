@@ -6,10 +6,9 @@ var AUTOPREFIXER_LOADER = 'autoprefixer-loader?{browsers:[' +
     '"Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
 
 var lifecycle = process.env['npm_lifecycle_event'];
-var isPrepublish = lifecycle === 'prepublish';
+var isPrepublish = lifecycle === 'prepublish' || lifecycle == 'dist'|| lifecycle == 'demo';
 var isKarma = process.env['NODE_ENV'] === 'test';
 var isTestDist = lifecycle === 'test-dist';
-console.log("prepublis?", isPrepublish);
 
 module.exports =  {
     devtool: (isPrepublish ? '#source-map' : "#inline-source-map"),
@@ -76,9 +75,5 @@ module.exports =  {
             CodeMirror: "codemirror",
             "window.CodeMirror": "codemirror"
         })
-    ],
-    externals: (isPrepublish ? [{
-        'react': true,
-        'Subschema': true
-    }] : null)
+    ]
 };

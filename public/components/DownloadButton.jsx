@@ -15,7 +15,7 @@ export default class DownloadButton extends Component {
 
     static defaultProps = {
         className: '',
-        buttonTxtPage: 'Open Page',
+        buttonTxtPage: 'Open as Page',
         buttonTxtProject: 'Download as Project',
         type: 'page'
     };

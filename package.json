@@ -54,6 +54,7 @@
     "style-loader": "^0.13.0",
     "subschema": "^0.54.0",
     "subschema-routing": "^1.0.0",
+    "subschema-test-support": "^1.0.2",
     "url-loader": "^0.5.7",
     "validate-npm-package-name": "^2.2.2",
     "webpack": "^1.12.9",
