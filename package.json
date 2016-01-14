@@ -61,7 +61,7 @@
   "scripts": {
     "karma": "NODE_ENV=test karma start --no-single-run --colors --auto-watch",
     "test": "NODE_ENV=test karma start --single-run --browsers Firefox",
-    "hot": "NODE_ENV=development webpack-dev-server --hot --inline --devtool '#inline-souce-map' --config ./webpack.config.js --entry ./public/app.jsx --output-filename=app.entry.js",
+    "hot": "NODE_ENV=development webpack-dev-server --hot --inline --devtool 'inline-souce-map' --config ./webpack.config.js --entry ./public/app.jsx --output-filename=app.entry.js",
     "demo": "NODE_ENV=production webpack -p --output-path .build --entry ./public/app.jsx --output-filename=app.[hash].js --config ./webpack.config.js",
     "dist": "NODE_ENV=production webpack --display-modules -p --output-path dist --entry ./src/index.js --output-library-target=umd --output-library-name GSuggests --output-filename=index.js --config ./webpack.config.js",
     "prepublish": "npm run demo"

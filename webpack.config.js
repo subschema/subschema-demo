@@ -13,7 +13,7 @@ var isTestDist = lifecycle === 'test-dist';
 module.exports =  {
     devtool: (isPrepublish ? '#source-map' : "#inline-source-map"),
     devServer: {
-        noInfo: true,
+        noInfo: false,
         hot: true,
         inline: true,
         contentBase: join('public'),
