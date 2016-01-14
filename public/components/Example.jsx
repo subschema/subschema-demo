@@ -11,8 +11,8 @@ import ExampleLess from './Example.less';
 import each from 'lodash/collection/each';
 import samples from 'subschema-test-support/samples';
 import DownloadButton from './DownloadButton.jsx';
-
-const {provide, listen} = decorators;
+import DisplayValueAndErrors from './DisplayValueAndErrors.jsx'
+const {provide} = decorators;
 
 function stringify(name, obj) {
 
@@ -20,39 +20,13 @@ function stringify(name, obj) {
     return `var ${name} = ${str};`;
 }
 
-class DisplayValueAndErrors extends Component {
-    @listen("error", null)
-    error(errors) {
-        this.setState({errors});
-    }
-
-    @listen("value", null)
-    update(value) {
-        this.setState({value});
-    }
-
-    render() {
-        return <div className="form-group clearfix">
-            <h3>Values:</h3>
- <pre className='value-manager-node-value'>
- {JSON.stringify(this.state ? this.state.value : null, null, '\t')}
- </pre>
-            <h3>Errors:</h3>
- <pre className='value-manager-node-error'>
- {JSON.stringify(this.state ? this.state.errors : null, null, '\t')}
- </pre>
-
-        </div>
-    }
-}
 
 export default class Example extends Component {
 
     static contextTypes = PropTypes.contextTypes;
 
     static propTypes = {
-        example: PropTypes.string,
-
+        example: PropTypes.string
     };
 
     componentWillMount() {
@@ -164,7 +138,10 @@ export default class Example extends Component {
         console.log('example\n\n', codeText, '\n\n');
         return <div className='sample-example-playground'>
             <Playground key={'form-'+this.props.example}
-                        codeText={codeText} theme='monokai'
+                        codeText={codeText}
+                        theme='monokai'
+                        expandTxt="Show Example Code"
+                        collapseTxt="Hide Example Code"
                         collapsableCode={true}
                         scope={scope}
                         context={context}

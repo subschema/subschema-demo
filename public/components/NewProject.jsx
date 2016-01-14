@@ -63,7 +63,7 @@ class UpdateValue extends Component {
     }
 
     render() {
-        var {filename, ...data} = this.state;
+        const {filename, ...data} = this.state;
         const {schema} = Basic;
         data.schema = schema;
         data.sample = {
@@ -72,7 +72,7 @@ class UpdateValue extends Component {
         };
         return (<div className="btn-group">
             <DownloadButton filename={filename} data={data} type='project' key="project"/>
-            <DownloadButton filename={filename} data={data} type='page' key="page"/>
+            <DownloadButton filename={filename} data={data} type='page' key="page" buttonTxtPage="Preview"/>
         </div>);
     }
 }
