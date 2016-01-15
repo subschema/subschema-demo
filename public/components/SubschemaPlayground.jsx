@@ -97,12 +97,12 @@ export default class SubschemaPlayground extends Component {
 
     createEditorCode() {
         var code = '';
-        var {data, errors, schema} = this.props;
+        var {data, errors,useData, useError, schema} = this.props;
 
-        if (this.props.data) {
+        if (useData) {
             code += `var value = ${stringify(this.props.data)};\n`;
         }
-        if (this.props.errors) {
+        if (useError) {
             code += `var errors = ${stringify(this.props.errors)};\n`;
         }
         code += `var schema = ${stringify(schema)};\n`;
@@ -114,7 +114,8 @@ export default class SubschemaPlayground extends Component {
 
     createFunction(editorCode) {
         var code = this.state.code;
-        const valueManager = ValueManager();
+
+        const valueManager = ValueManager(this.props.useData? this.props.value : {});
         const loader = loaderFactory([DefaultLoader]);
         const {decorators, ...SubschemaCopy} = Subschema;
         const {...copyDecorators} = Subschema.decorators;
@@ -131,8 +132,6 @@ ${transform(editorCode, babelrc).code}
 return {
    loader,
    schema,
-   value,
-   errors,
    valueManager
 };
 `);
@@ -219,17 +218,24 @@ return {
     }
 
     render() {
-        const { collapsableCode, schema, errors, value, useData,useErrors, filename } = this.props;
+        const { collapsableCode, schema, errors, value, useData,useError, filename } = this.props;
         const editorCode = this.createEditorCode();
         const formProps = this.createFunction(editorCode);
+        const _errors = useError ? errors : null;
+        const _data = useData ? value : {};
 
         const sample = {
             setupTxt: this.state.code,
             schema,
-            data: formProps.value,
-            errors: formProps.errors,
+            data:_data,
+            errors:_errors,
             description: this.props.description
         };
+        if (useError){
+            setTimeout(()=>{
+                formProps.valueManager.setErrors(_errors);
+            }, 500)
+        }
         return (
             <div>
                 <div className={`playground ${collapsableCode ? "collapsableCode" : ""}`}>
@@ -249,9 +255,9 @@ return {
                     </div>
                 </div>
                 <div className='btn-group'>
-                    <DownloadButton type="page" useData={useData} useErrors={useErrors} data={sample}
+                    <DownloadButton type="page" useData={useData} useError={useError} data={sample}
                                     filename={filename}/>
-                    <DownloadButton type="project" useData={useData} useErrors={useErrors} data={sample}
+                    <DownloadButton type="project" useData={useData} useError={useError} data={sample}
                                     filename={filename}/>
                 </div>
             </div>

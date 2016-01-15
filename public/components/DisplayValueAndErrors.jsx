@@ -10,6 +10,10 @@ function stringify(obj) {
     return JSON.stringify(obj, null, 2);
 }
 export default class DisplayValueAndErrors extends Component {
+    constructor(...args){
+        super(...args);
+        this.state = {};
+    }
     @listen("error", null)
     error(errs, old, key) {
         if (errs) {

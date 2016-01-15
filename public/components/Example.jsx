@@ -59,6 +59,10 @@ export default class Example extends Component {
                                  expandTxt="Show Example Code"
                                  collapseTxt="Hide Example Code"
                                  setupTxt={setupTxt}
+                                 value={data}
+                                 useData={this.props.useData}
+                                 useError={this.props.useError}
+                                 errors={errors}
                                  formProps={props}
                                  filename={`Example ${this.props.example}`}
                                  imports={Object.keys(props)}
