@@ -62,9 +62,14 @@ export default class DownloadButton extends Component {
         }, this.props.type, `${ext}-blob`);
         if (isPage) {
             var url = URL.createObjectURL(blob), other = window.open(url);
-            if (other.addEventListener) {
-                other.addEventListener('DOMContentLoaded', this.handleDone)
+            if (!other) {
+                alert("Looks like you have blockup popper");
                 return;
+            } else {
+                if (other.addEventListener) {
+                    other.addEventListener('DOMContentLoaded', this.handleDone)
+                    return;
+                }
             }
         }
         try {

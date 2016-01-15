@@ -5,7 +5,6 @@ import ReactDOM from 'react-dom';
 import Highlight from './Highlight.jsx';
 import Playground from 'component-playground/components/playground.jsx';
 import Preview from 'component-playground/components/preview.jsx';
-
 import Subschema, {PropTypes, Form, ValueManager, loaderFactory, DefaultLoader, decorators} from 'Subschema';
 import CodeMirror from 'codemirror/mode/javascript/javascript.js';
 import cloneDeep from 'lodash/lang/cloneDeep';
@@ -16,6 +15,7 @@ import DownloadButton from './DownloadButton.jsx';
 import DisplayValueAndErrors from './DisplayValueAndErrors.jsx'
 import {availablePlugins} from "babel-standalone";
 import transformLegacy from "babel-plugin-transform-decorators-legacy";
+import SubschemaPlayground from './SubschemaPlayground.jsx';
 
 availablePlugins['transform-decorators-legacy'] = transformLegacy;
 
@@ -40,55 +40,10 @@ export default class Example extends Component {
         example: PropTypes.string
     };
 
-    componentWillMount() {
-        if (!this.state) this.state = {edit: true};
-        this.setup(this.props);
-    }
-
-    componentWillUnmount() {
-        provide.defaultLoader = this.context.loader;
-    }
-
-    componentWillReceiveProps(props) {
-        if (!this.managed || props.example !== this.props.example) {
-            this.setup(props);
-            this.forceUpdate();
-        } else {
-            if (props.useData !== this.props.useData) {
-                this.managed.valueManager.setValue(props.useData ? this.managed.data : {});
-            }
-            if (props.useError !== this.props.useError) {
-                this.managed.valueManager.setErrors(props.useError ? this.managed.errors : null);
-            }
-        }
-    }
-
-    setup(props) {
-        var {schema, ...managed} = samples[props.example];
-        this.managed = managed;
-        var value = {}, errors = null;
-        if (props.useData) {
-            value = managed.data;
-        }
-        if (props.useError) {
-            errors = managed.errors;
-        }
-        managed.schema = cloneDeep(schema);
-
-
-        managed.valueManager = ValueManager(value, errors);
-
-    }
-
-    schema() {
-        return JSON.stringify(this.managed.schema, null, 2);
-    }
-
     render() {
-        var schema = this.schema();
         return <div>
             <h3>{this.props.example}</h3>
-            <p>{this.managed.description}</p>
+            <p>{this.props.conf.description}</p>
             {this.renderEdit()}
 
         </div>
@@ -96,72 +51,22 @@ export default class Example extends Component {
 
 
     renderEdit() {
-        var {schema, setup, setupTxt, props, data,errors, valueManager} = this.managed;
-        var loader = provide.defaultLoader = loaderFactory([DefaultLoader]);
-        var valProps = {
-                schema: schema,
-                value: this.props.useData ? data : {},
-                errors: this.props.useError ? errors : null
-            },
-            context = {
-                valueManager,
-                loader
-            },
-            scope = {
-                Form,
-                React,
-                Subschema,
-                loader,
-                valueManager,
-                DisplayValueAndErrors
-            };
-        //Just in case
-//        rest.Form = FormContext;
+        var {schema, setup, setupTxt, props,description,data,errors} = this.props.conf;
         props = props || {};
-        if (setup) {
-            setup(scope, valProps);
-        }
-        var propStr = [], vars = [];
-        Object.keys(valProps).forEach(function (v) {
-            if (!valProps[v] || props[v]) {
-                return;
-            }
-            vars.push(stringify(v, valProps[v]));
-            propStr.push(`${v}={${v}}`);
-        });
-        each(props, (val, v)=> {
-            if (val == true) val = v;
-            else val = JSON.stringify(val);
-            propStr.push(`${v}={${val}}`);
-        });
-        var codeText = [
-            `(function () {
-"use strict";
-//uncomment these if you are using outside of the editor
-//import React, {Component} from "react";
-//import Subschema,{Form} from "Subschema";
-            `,
-            vars.join('\n'),
-            setupTxt,
-            `return <Form ${propStr.join(' ')}><DisplayValueAndErrors/></Form>`,
-            '}())'
-        ].join('\n');
-        console.log('example\n\n', codeText, '\n\n');
         return <div className='sample-example-playground'>
-            <Playground key={'form-'+this.props.example}
-                        codeText={codeText}
-                        theme='monokai'
-                        expandTxt="Show Example Code"
-                        collapseTxt="Hide Example Code"
-                        collapsableCode={true}
-                        scope={scope}
-                        context={context}
-
+            <SubschemaPlayground key={'form-'+this.props.example}
+                                 theme='monokai'
+                                 expandTxt="Show Example Code"
+                                 collapseTxt="Hide Example Code"
+                                 setupTxt={setupTxt}
+                                 formProps={props}
+                                 filename={`Example ${this.props.example}`}
+                                 imports={Object.keys(props)}
+                                 description={description}
+                                 schema={schema}
+                                 collapsableCode={true}
             />
-            <div className='btn-group'>
-                <DownloadButton type="page" data={this.managed} filename={`Example ${this.props.example}`}/>
-                <DownloadButton type="project" data={this.managed} filename={`Example ${this.props.example}`}/>
-            </div>
+
         </div>
     }
 }

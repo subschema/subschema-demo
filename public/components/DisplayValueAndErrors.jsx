@@ -27,7 +27,7 @@ export default class DisplayValueAndErrors extends Component {
     }
 
     render() {
-        return <div className="form-group clearfix">
+        return <div className="form-group">
             <h3>Values:</h3>
  <pre className='value-manager-node-value'>
  {stringify(this.state.value)}
