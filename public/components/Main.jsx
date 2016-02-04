@@ -11,12 +11,14 @@ export default class Main extends Component {
     static propTypes = {
         useData: PropTypes.listener,
         useError: PropTypes.listener,
-        onChange: PropTypes.valueEvent
+        onChange: PropTypes.valueEvent,
+        notFound: PropTypes.type
     };
 
     static defaultProps = {
         useData: "useData",
-        useError: "useError"
+        useError: "useError",
+        notFound: "NotFound"
     };
 
     render() {
@@ -27,6 +29,9 @@ export default class Main extends Component {
         var {component, ...rest} = this.props.value;
         if (component == null) return null;
         var Component = this.context.loader.loadType(component);
+        if (Component == null) {
+            Component = this.props.notFound;
+        }
         return <Component {...this.props} {...rest}/>
 
     }

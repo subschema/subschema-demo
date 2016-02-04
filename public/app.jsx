@@ -13,10 +13,11 @@ import Example from './components/Example.jsx';
 import Index from './Index.jsx';
 import sample from './sample.less';
 import history from './location';
-
+import NotFound from './components/NotFound.jsx';
 var loader = loaderFactory([DefaultLoader]);
 
 loader.addType({
+    NotFound,
     Navigate,
     Link,
     Main,
@@ -44,7 +45,7 @@ var valueManager = ValueManager({
 
 var loc;
 
-valueManager.addListener('pathname', function(pathname){
+valueManager.addListener('pathname', function (pathname) {
     var type = pathname.replace(/\#?\//, '')
     if (/develop/.test(pathname)) {
         valueManager.update('main', {component: type});
