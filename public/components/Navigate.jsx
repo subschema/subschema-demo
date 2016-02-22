@@ -1,60 +1,55 @@
 import React, {Component} from 'react';
 import Subschema, {PropTypes,Editor} from 'Subschema';
 
-export default class Navigate extends Component {
-
-    static contextTypes = {
-        valueManager: PropTypes.valueManager
-    };
+class NavigateItem extends Component {
 
     static propTypes = {
+        href: PropTypes.expression,
+        label: PropTypes.expression,
+        path: PropTypes.path,
+        onClick:PropTypes.valueEvent
+    };
+    static defaultProps = {
+        pathname: ".",
+        onClick:'pathname'
+    };
+    clzName = (name = '')=> {
+        return 'list-group-item ' + ('/' + name.replace(/^#+?\//, '') === this.props.pathname ? 'active' : '');
+    };
+    handleClick = (e)=>{
+        this.props.onClick(this.props.href);
+    };
+    render() {
+        const {href, label, ...props} = this.props;
+        return <a href={href} onClick={this.handleClick} className={this.clzName(href)}>{label}</a>
+    }
+
+}
+export default class Navigate extends Component {
+
+    static propTypes = {
+        path: PropTypes.path,
         pathname: PropTypes.listener,
-        href: PropTypes.string,
-        label: PropTypes.string,
+        Item: PropTypes.injectClass
     };
 
     static defaultProps = {
         pathname: "pathname",
-        href: '/{.}',
+        Item: NavigateItem,
+        href: '#/{.}',
         label: '{.}'
     };
 
-    clzName = (name)=> {
-        return 'list-group-item ' + ('/' + name.replace(/^#+?\//, '') === this.props.pathname ? 'active' : '');
-    };
 
-    constructor(props, ...rest) {
-        super(props, ...rest);
-        this._setupFormatters(props);
-    }
+    renderItems() {
+        const {Item, value, path,href, label, pathname} = this.props;
 
-    componentWillReceiveProps(props) {
-        if (!(props.href === this.props.href && props.label === this.props.label)) {
-            this._setupFormatters(props);
-        }
-    }
-
-    _setupFormatters(props) {
-        this.hrefFormatter = Editor.expressionEngine(props.href);
-        this.labelFormatter = Editor.expressionEngine(props.label);
-    }
-
-
-    renderLink(value, i) {
-        var {...props} = this.props;
-        props['.'] = value;
-        var href = this.hrefFormatter.format(props), label = this.labelFormatter.format(props);
-        return <a href={href} className={this.clzName(href)} key={'link-'+i}>{label}</a>
-    }
-
-    renderItems(value) {
-        value = value || {};
-        return value.map(this.renderLink, this);
+        return value.map((v, i)=><Item key={`nav-item-${i}`} pathname={pathname} href={href} label={label} path={`${path}.${i}`}/>);
     }
 
     render() {
         return <div className="list-group left-nav">
-            {this.renderItems(Object.keys(this.props.value))}
+            {this.renderItems()}
         </div>
     }
 }

@@ -8,7 +8,6 @@ import ExampleLess from './Example.less';
 import each from 'lodash/collection/each';
 import samples from 'subschema-test-support/samples';
 import DownloadButton from './DownloadButton.jsx';
-import DisplayValueAndErrors from './DisplayValueAndErrors.jsx'
 import SubschemaPlayground from './SubschemaPlayground.jsx';
 
 export default class Example extends Component {

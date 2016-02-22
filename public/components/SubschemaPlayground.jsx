@@ -3,9 +3,9 @@ import React, {Component, PropTypes} from 'react';
 import Subschema, {ValueManager, Form, loaderFactory, decorators, DefaultLoader} from 'Subschema';
 import Editor from 'component-playground/components/Editor.jsx';
 import {transform, availablePlugins} from "babel-standalone";
-import DisplayValueAndErrors from './DisplayValueAndErrors.jsx'
+//import DisplayValueAndErrors from './DisplayValueAndErrors.jsx'
 import transformLegacy from "babel-plugin-transform-decorators-legacy";
-import DownloadButton from './DownloadButton.jsx';
+//import DownloadButton from './DownloadButton.jsx';
 
 availablePlugins['transform-decorators-legacy'] = transformLegacy;
 
@@ -236,6 +236,15 @@ return {
                 formProps.valueManager.setErrors(_errors);
             }, 500)
         }
+        /*               <div className='btn-group'>
+         <DownloadButton type="page" useData={useData} useError={useError} data={sample}
+         filename={filename}/>
+         <DownloadButton type="project" useData={useData} useError={useError} data={sample}
+         filename={filename}/>
+         </div>*/
+        /*
+         <DisplayValueAndErrors/>
+         */
         return (
             <div>
                 <div className={`playground ${collapsableCode ? "collapsableCode" : ""}`}>
@@ -249,17 +258,12 @@ return {
                     <div className="playgroundPreview clearfix">
                         <Form {...formProps}>
                             <div style={{width:'100%', float:'left'}}>
-                                <DisplayValueAndErrors/>
+
                             </div>
                         </Form>
                     </div>
                 </div>
-                <div className='btn-group'>
-                    <DownloadButton type="page" useData={useData} useError={useError} data={sample}
-                                    filename={filename}/>
-                    <DownloadButton type="project" useData={useData} useError={useError} data={sample}
-                                    filename={filename}/>
-                </div>
+
             </div>
         );
     }

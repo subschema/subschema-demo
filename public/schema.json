@@ -3,15 +3,15 @@
     "useData": {
       "type": "Link",
       "label": "Data",
-      "search": "?useData=true",
-      "className": " ",
+      "href": "?useData={useData}",
+      "className": "no-class",
       "template": false
     },
     "useError": {
       "type": "Link",
       "label": "Errors",
-      "className": " ",
-      "search": "?useError=true",
+      "className": "no-class",
+      "href": "?useError={useError}",
       "template": false
     },
     "samples": {

@@ -1,8 +1,11 @@
 "use strict";
 
 import React, {Component} from 'react';
+/*
 import NewProject from './components/NewProject.jsx';
 
+<NewProject/>
+*/
 export default function Index() {
     return (
         <div className="jumbotron">
@@ -19,7 +22,6 @@ export default function Index() {
                 more</a></p>
             <hr/>
             <p>Or you can create a brand new project</p>
-            <NewProject/>
         </div>
     );
 };

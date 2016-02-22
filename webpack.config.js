@@ -6,14 +6,14 @@ var AUTOPREFIXER_LOADER = 'autoprefixer-loader?{browsers:[' +
     '"Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
 
 var lifecycle = process.env['npm_lifecycle_event'];
-var isPrepublish = lifecycle === 'prepublish' || lifecycle == 'dist'|| lifecycle == 'demo';
+var isPrepublish = lifecycle === 'prepublish' || lifecycle == 'dist' || lifecycle == 'demo';
 var isKarma = process.env['NODE_ENV'] === 'test';
 var isTestDist = lifecycle === 'test-dist';
-var subschema =  join('node_modules/subschema/dist/subschema-noreact.js');
-                //join('../subschema/src');
+var subschema =  //join('node_modules/subschema/dist/subschema-noreact.js');
+    join('../subschema/src');
 var subschemaStyles = path.join(subschema, 'styles');
 
-module.exports =  {
+module.exports = {
     devtool: (isPrepublish ? '#source-map' : "#inline-source-map"),
     devServer: {
         noInfo: false,
@@ -29,11 +29,12 @@ module.exports =  {
             'fbjs': join('node_modules/fbjs'),
             'react': join('node_modules/react'),
             'Subschema': subschema,
-           // 'subschema-styles':subschemaStyles,
+            subschema: subschema,
+            'subschema-styles': subschemaStyles,
             'component-playground': join('node_modules/component-playground/src'),
             //'subschema-styles': join('node_modules/subschema/src/styles'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js'),
-            'ReactDOM':'react-dom'
+            'ReactDOM': 'react-dom'
         }
     },
     stats: {
@@ -41,15 +42,23 @@ module.exports =  {
         reasons: true
     },
     module: {
+        extensions: ['', '.jsx', '.js'],
         loaders: [
             {
                 test: /\.jsx?$/,
                 //do this to prevent babel from translating everything.
                 loader: 'babel',
+                exclude: [
+                    /subschema-project/,
+                    /babel/,
+                    /babelyon/,
+                    /codemirror/,
+                    /babylon/
+                ],
                 include: [
+                    /subschema/,
                     join('src'),
                     join('public'),
-                    join('node_modules/subschema-project/src'),
                     join('node_modules/component-playground/src'),
                     isKarma ? join('test') : join('no_such_dir')
                 ]

@@ -17,7 +17,9 @@ export default class Link extends Component {
 
     static defaultProps = {
         "pathname": "pathname",
-        "label": "{.}"
+        "label": "{.}",
+        "href": "",
+        "search":""
     };
 
     handleClick = (e)=> {

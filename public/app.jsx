@@ -39,12 +39,29 @@ loader.addType(Object.keys(develop).reduce(function (obj, key) {
 
 
 var valueManager = ValueManager({
-    samples: samples,
-    develop: develop
+    samples: Object.keys(samples),
+    develop: Object.keys(develop)
 });
 
 var loc;
 
+// Listen for changes to the current location. The
+// listener is called once immediately.
+
+let unlisten = history.listen(location => {
+    console.log('loc', location);
+    const pathname = location.pathname;
+    valueManager.update('pathname', pathname);
+    valueManager.update('useData', location.query.useData == "true");
+    valueManager.update('useError', location.query.useError == "true");
+
+    loc = location;
+
+});
+valueManager.addListener('pathname', function(vv){
+    console.log('pathname', vv)
+});
+/*
 valueManager.addListener('pathname', function (pathname) {
     var type = pathname.replace(/\#?\//, '')
     if (/develop/.test(pathname)) {
@@ -55,24 +72,7 @@ valueManager.addListener('pathname', function (pathname) {
         valueManager.update('main', {component: 'Index', conf: null});
     }
 
-});
-// Listen for changes to the current location. The
-// listener is called once immediately.
-
-let unlisten = history.listen(location => {
-    console.log('loc', location);
-    var pathname = location.pathname;
-
-    if (!loc || loc.pathname != pathname) {
-        valueManager.update('pathname', location.pathname);
-    }
-    valueManager.update('useData', location.query.useData == "true");
-    valueManager.update('useError', location.query.useError == "true");
-
-    loc = location;
-
-});
-
+});*/
 //Handle change of state to showing data or error.
 function handleDataError(val, old, path) {
     //make sure the poll cycle exists first;
