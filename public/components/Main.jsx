@@ -1,29 +1,29 @@
 import React, {Component} from 'react';
 import Subschema, {PropTypes} from 'Subschema';
 import Index from '../Index.jsx';
-import Example from './Example.jsx';
 import samples from 'subschema-test-support/samples';
 
 export default class Main extends Component {
 
     static contextTypes = {
-        loader: PropTypes.loader.isRequired
+        loader: PropTypes.loader.isRequired,
+        injector: PropTypes.injector
     };
 
     static propTypes = {
         useData: PropTypes.listener,
         useError: PropTypes.listener,
         notFound: PropTypes.type,
-        value:PropTypes.value
+        value: PropTypes.value
     };
 
     static defaultProps = {
         useData: "useData",
         useError: "useError",
         notFound: "NotFound",
-        value:"pathname"
+        value: "pathname"
 
-        };
+    };
 
     render() {
         if (this.props.value == null) {
@@ -42,14 +42,14 @@ export default class Main extends Component {
             value = {component: 'Index', conf: null};
         }
 
-        var {component, ...rest} = value;
+        let {component, ...rest} = value;
         if (component == null) return null;
-        var Component = this.context.loader.loadType(component);
+        let Component = this.context.loader.loadType(component);
         if (Component == null) {
             Component = this.props.notFound;
         }
-
-        return <Component {...this.props} {...rest}/>
+        let IComponent = this.context.injector.inject(Component);
+        return <IComponent {...this.props} {...rest}/>
 
     }
 }

@@ -1,14 +1,14 @@
 {
   "schema": {
     "useData": {
-      "type": "Link",
+      "type": "LiLink",
       "label": "Data",
       "href": "?useData={useData}",
       "className": "no-class",
       "template": false
     },
     "useError": {
-      "type": "Link",
+      "type": "LiLink",
       "label": "Errors",
       "className": "no-class",
       "href": "?useError={useError}",
@@ -35,16 +35,9 @@
       "fieldsets": [
         {
           "template": "NavTemplate",
-          "fieldsets": [
-            {
-              "template": "ULTemplate",
-              "liClassName": "",
-              "className": "nav navbar-nav navbar-right",
-              "fields": [
-                "useData",
-                "useError"
-              ]
-            }
+          "fields": [
+            "useData",
+            "useError"
           ]
         },
         {

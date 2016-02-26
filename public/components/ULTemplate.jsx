@@ -3,7 +3,8 @@ import Subschema, {PropTypes} from 'Subschema';
 
 export default class ULTemplate extends Component {
     static propTypes = {
-        liClassName: PropTypes.cssClass
+        liClassName: PropTypes.cssClass,
+        className: PropTypes.string
     };
     static defaultProps = {
         liClassName: 'list-group-item'

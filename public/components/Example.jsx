@@ -8,14 +8,21 @@ import ExampleLess from './Example.less';
 import each from 'lodash/collection/each';
 import samples from 'subschema-test-support/samples';
 import DownloadButton from './DownloadButton.jsx';
-import SubschemaPlayground from './SubschemaPlayground.jsx';
+import UninjectedSubschemaPlayground from './SubschemaPlayground.jsx';
 
 export default class Example extends Component {
 
     static contextTypes = PropTypes.contextTypes;
 
     static propTypes = {
-        example: PropTypes.string
+        example: PropTypes.string,
+        SubschemaPlayground:PropTypes.injectClass,
+        conf:PropTypes.any,
+        useData:PropTypes.bool,
+        useError:PropTypes.bool
+    };
+    static defaultProps = {
+        SubschemaPlayground:UninjectedSubschemaPlayground
     };
 
     render() {
@@ -29,8 +36,9 @@ export default class Example extends Component {
 
 
     renderEdit() {
-        var {schema, setup, setupTxt, props,description,data,errors} = this.props.conf;
-        props = props || {};
+        const {SubschemaPlayground, conf} = this.props;
+        const {schema, setup, setupTxt, props,description,data,errors} =conf;
+        const formProps = props || {};
         return <div className='sample-example-playground'>
             <SubschemaPlayground key={'form-'+this.props.example}
                                  theme='monokai'
@@ -41,9 +49,9 @@ export default class Example extends Component {
                                  useData={this.props.useData}
                                  useError={this.props.useError}
                                  errors={errors}
-                                 formProps={props}
+                                 formProps={formProps}
                                  filename={`Example ${this.props.example}`}
-                                 imports={Object.keys(props)}
+                                 imports={Object.keys(formProps)}
                                  description={description}
                                  schema={schema}
                                  collapsableCode={true}

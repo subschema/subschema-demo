@@ -8,6 +8,7 @@ import Navigate from './components/Navigate.jsx';
 import NavTemplate from './components/NavTemplate.jsx';
 import ULTemplate from './components/ULTemplate.jsx';
 import Link from './components/Link.jsx';
+import LiLink from './components/LiLink.jsx';
 import Main from './components/Main.jsx';
 import Example from './components/Example.jsx';
 import Index from './Index.jsx';
@@ -22,7 +23,8 @@ loader.addType({
     Link,
     Main,
     Index,
-    Example
+    Example,
+    LiLink
 });
 loader.addTemplate({
     NavTemplate,

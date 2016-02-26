@@ -15,25 +15,31 @@ export default class DevelopTypes extends Component {
         loader: PropTypes.loader
     };
 
-    renderPropType(type, i) {
-
-        return <li key={`type-${i}`} className="list-group-item">
-            <h4 className="list-group-item-heading">{i}</h4>
-            <p className="list-group-item-text">{type}</p>
-        </li>
+    renderPropType(key, i, def) {
+        return <tr key={`type-${i}`}>
+            <td>{i}</td>
+            <td>{key}</td>
+            <td>{def ? ''+def : ''}</td>
+        </tr>
     }
 
     renderPropTypes(type) {
-        return <ul className="list-group">
-            {map(propTypesToNames(type.propTypes), this.renderPropType, this)}
-        </ul>
+        const defaultProps = type.defaultProps || {};
+        return <table className="table">
+            <thead>
+            <tr><th>Property</th><th>Type</th><th>Default</th></tr>
+            </thead>
+            <tbody>
+            {map(propTypesToNames(type.propTypes), (p, n, type)=> this.renderPropType(p, n, defaultProps[p]), this)}
+            </tbody>
+        </table>
     }
 
     renderTypeDoc(type, key) {
         return <div className="" key={`type-doc-${key}`}>
             <h4>{type.name}</h4>
             <div>
-                <h5>Options</h5>
+                <h5>Props</h5>
                 {this.renderPropTypes(type.type, this)}
             </div>
         </div>

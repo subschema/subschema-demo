@@ -1,11 +1,11 @@
 "use strict";
-import React, {Component, PropTypes} from 'react';
-import Subschema, {ValueManager, Form, loaderFactory, decorators, DefaultLoader} from 'Subschema';
+import React, {Component} from 'react';
+import Subschema, {ValueManager,PropTypes, Form, loaderFactory, decorators, DefaultLoader} from 'Subschema';
 import Editor from 'component-playground/components/Editor.jsx';
 import {transform, availablePlugins} from "babel-standalone";
-//import DisplayValueAndErrors from './DisplayValueAndErrors.jsx'
+import UninjectedDisplayValueAndErrors from './DisplayValueAndErrors.jsx';
 import transformLegacy from "babel-plugin-transform-decorators-legacy";
-//import DownloadButton from './DownloadButton.jsx';
+import DownloadButton from './DownloadButton.jsx';
 
 availablePlugins['transform-decorators-legacy'] = transformLegacy;
 
@@ -64,11 +64,14 @@ export default class SubschemaPlayground extends Component {
         imports: PropTypes.arrayOf(PropTypes.string),
         schema: PropTypes.oneOfType([PropTypes.object, PropTypes.string]),
         setupTxt: PropTypes.string.isRequired,
-        value: PropTypes.object,
-        errors: PropTypes.object,
+        value: PropTypes.any,
+        errors: PropTypes.any,
         formProps: PropTypes.object,
         onChange: PropTypes.func,
-        filename: PropTypes.string
+        filename: PropTypes.string,
+        DisplayValueAndErrors:PropTypes.injectClass,
+        useData:PropTypes.bool,
+        useError:PropTypes.bool
 
     };
 
@@ -83,7 +86,8 @@ export default class SubschemaPlayground extends Component {
         initiallyExpanded: false,
         filename: 'example',
         onChange(){
-        }
+        },
+        DisplayValueAndErrors:UninjectedDisplayValueAndErrors
     };
 
     constructor(props, ...rest) {
@@ -218,7 +222,7 @@ return {
     }
 
     render() {
-        const { collapsableCode, schema, errors, value, useData,useError, filename } = this.props;
+        const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData,useError, filename } = this.props;
         const editorCode = this.createEditorCode();
         const formProps = this.createFunction(editorCode);
         const _errors = useError ? errors : null;
@@ -258,10 +262,16 @@ return {
                     <div className="playgroundPreview clearfix">
                         <Form {...formProps}>
                             <div style={{width:'100%', float:'left'}}>
-
+                                <DisplayValueAndErrors value="."/>
                             </div>
                         </Form>
                     </div>
+                </div>
+                <div className='btn-group'>
+                    <DownloadButton type="page" useData={useData} useError={useError} data={sample}
+                                    filename={filename}/>
+                    <DownloadButton type="project" useData={useData} useError={useError} data={sample}
+                                    filename={filename}/>
                 </div>
 
             </div>
