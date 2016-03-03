@@ -1,7 +1,7 @@
 import React, {Component} from 'react';
 import Subschema, {PropTypes} from 'Subschema';
 import Index from '../Index.jsx';
-import samples from 'subschema-test-support/samples';
+import {samples} from 'subschema-test-support';
 
 export default class Main extends Component {
 

@@ -1,6 +1,6 @@
 "use strict";
 import React, {Component} from 'react';
-import Subschema, {ValueManager,PropTypes, Form, loaderFactory, decorators, DefaultLoader} from 'Subschema';
+import  {Form, newSubschemaContext, PropTypes} from 'Subschema';
 import Editor from 'component-playground/components/Editor.jsx';
 import {transform, availablePlugins} from "babel-standalone";
 import UninjectedDisplayValueAndErrors from './DisplayValueAndErrors.jsx';
@@ -118,16 +118,11 @@ export default class SubschemaPlayground extends Component {
 
     createFunction(editorCode) {
         var code = this.state.code;
-
+        const Subschema = newSubschemaContext();
+        const {ValueManager, loader}  = Subschema;
         const valueManager = ValueManager(this.props.useData? this.props.value : {});
-        const loader = loaderFactory([DefaultLoader]);
-        const {decorators, ...SubschemaCopy} = Subschema;
-        const {...copyDecorators} = Subschema.decorators;
         const {errors, value} = this.props;
         const {...schema} = this.props.schema;
-
-        decorators.provide.defaultLoader = loader;
-        SubschemaCopy.decorators = copyDecorators;
         try {
             var func = new Function(['React', 'Component', 'Subschema', 'loader', 'valueManager', 'errors', 'value', 'schema'], `
 
@@ -139,7 +134,7 @@ return {
    valueManager
 };
 `);
-            var ret = func(React, Component, SubschemaCopy, loader, valueManager, errors, value, schema);
+            var ret = func(React, Component, Subschema, loader, valueManager, errors, value, schema);
             this._compiled = func;
             this.state.error = null;
             return ret;
@@ -149,7 +144,7 @@ return {
 
         if (this._compiled) {
             try {
-                return this._compiled(React, Component, SubschemaCopy, loader, valueManager, errors, value, schema);
+                return this._compiled(React, Component, Subschema, loader, valueManager, errors, value, schema);
             } catch (e) {
             }
         }
@@ -240,15 +235,7 @@ return {
                 formProps.valueManager.setErrors(_errors);
             }, 500)
         }
-        /*               <div className='btn-group'>
-         <DownloadButton type="page" useData={useData} useError={useError} data={sample}
-         filename={filename}/>
-         <DownloadButton type="project" useData={useData} useError={useError} data={sample}
-         filename={filename}/>
-         </div>*/
-        /*
-         <DisplayValueAndErrors/>
-         */
+
         return (
             <div>
                 <div className={`playground ${collapsableCode ? "collapsableCode" : ""}`}>

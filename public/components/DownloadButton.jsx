@@ -46,8 +46,7 @@ export default class DownloadButton extends Component {
 
         var isPage = this.props.type === 'page';
         var ext = this.props.type === 'project' ? 'zip' : 'html';
-        var filename = kebabCase(this.props.filename),
-            filename = `${filename}.${ext}`;
+        var filename = kebabCase(this.props.filename);
         var blob = generate({
             jsName: filename,
             title: this.props.filename,
@@ -73,7 +72,7 @@ export default class DownloadButton extends Component {
             }
         }
         try {
-            saveAs(blob, filename);
+            saveAs(blob, `${this.props.filename}.${ext}`);
         } catch (err) {
             console.log(err);
             alert('Error saving ' + err.message);

@@ -1,7 +1,7 @@
 import React from 'react';
 import { render } from 'react-dom';
 import develop from './develop';
-import samples from 'subschema-test-support/samples';
+import {samples} from 'subschema-test-support';
 import Subschema, {ValueManager, Form, decorators, loaderFactory, DefaultLoader}  from 'Subschema';
 import schema from './schema.json';
 import Navigate from './components/Navigate.jsx';
