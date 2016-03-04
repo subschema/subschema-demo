@@ -1,7 +1,7 @@
 "use strict";
 import React, {Component} from 'react';
-import  {Form, newSubschemaContext, PropTypes} from 'Subschema';
-import Editor from 'component-playground/components/Editor.jsx';
+import {Form, newSubschemaContext, PropTypes} from 'Subschema';
+import Editor from './Editor.jsx';
 import {transform, availablePlugins} from "babel-standalone";
 import UninjectedDisplayValueAndErrors from './DisplayValueAndErrors.jsx';
 import transformLegacy from "babel-plugin-transform-decorators-legacy";

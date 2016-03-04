@@ -38,8 +38,15 @@ module.exports = {
             'Subschema': subschema,
             subschema: path.join(subschema, '..'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
-            'subschema-test-support': path.join(subschemaTest,'index'),
+            'subschema-test-support': path.join(subschemaTest, 'index'),
             'component-playground': join('node_modules/component-playground/src'),
+            'babylon':join('node_modules/babylon'),
+            'babel-template':join('node_modules/babel-template'),
+            'babel-traverse':join('node_modules/babel-traverse'),
+            'babel-runtime':join('node_modules/babel-runtime'),
+            'babel-types':join('node_modules/babel-types'),
+            'lodash':join('node_modules/lodash'),
+
             //'subschema-styles': join('node_modules/subschema/src/styles'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
         }
@@ -102,7 +109,12 @@ module.exports = {
 
             {
                 test: /\.less$/,
-                loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!less'
+                loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!' + AUTOPREFIXER_LOADER + '!less'
+            },
+
+            {
+                test: /\.lessp$/,
+                loader: 'style!css!'+AUTOPREFIXER_LOADER +'!less'
             }]
 
     },
