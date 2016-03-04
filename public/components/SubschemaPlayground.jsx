@@ -1,6 +1,6 @@
 "use strict";
 import React, {Component} from 'react';
-import {Form, newSubschemaContext, PropTypes} from 'Subschema';
+import {Form, newSubschemaContext, PropTypes, ReactCSSReplaceTransition} from 'Subschema';
 import Editor from './Editor.jsx';
 import {transform, availablePlugins} from "babel-standalone";
 import UninjectedDisplayValueAndErrors from './DisplayValueAndErrors.jsx';
@@ -69,15 +69,17 @@ export default class SubschemaPlayground extends Component {
         formProps: PropTypes.object,
         onChange: PropTypes.func,
         filename: PropTypes.string,
-        DisplayValueAndErrors:PropTypes.injectClass,
-        useData:PropTypes.bool,
-        useError:PropTypes.bool
+        DisplayValueAndErrors: PropTypes.injectClass,
+        useData: PropTypes.bool,
+        useError: PropTypes.bool,
+        rollUp: PropTypes.transition
 
     };
 
 
     static defaultProps = {
         theme: "monokai",
+        rollUp: {transition: "rollUp", on: ["appear", "enter", "leave"]},
         noRender: true,
         context: {},
         setupTxt: '',
@@ -87,7 +89,7 @@ export default class SubschemaPlayground extends Component {
         filename: 'example',
         onChange(){
         },
-        DisplayValueAndErrors:UninjectedDisplayValueAndErrors
+        DisplayValueAndErrors: UninjectedDisplayValueAndErrors
     };
 
     constructor(props, ...rest) {
@@ -120,7 +122,7 @@ export default class SubschemaPlayground extends Component {
         var code = this.state.code;
         const Subschema = newSubschemaContext();
         const {ValueManager, loader}  = Subschema;
-        const valueManager = ValueManager(this.props.useData? this.props.value : {});
+        const valueManager = ValueManager(this.props.useData ? this.props.value : {});
         const {errors, value} = this.props;
         const {...schema} = this.props.schema;
         try {
@@ -189,7 +191,7 @@ return {
     }
 
     renderEditor(editorCode) {
-        return <div>
+        return <div key="editor">
             <div className="prelude">
                 <Editor
                     className="playgroundStage"
@@ -226,12 +228,12 @@ return {
         const sample = {
             setupTxt: this.state.code,
             schema,
-            data:_data,
-            errors:_errors,
+            data: _data,
+            errors: _errors,
             description: this.props.description
         };
-        if (useError){
-            setTimeout(()=>{
+        if (useError) {
+            setTimeout(()=> {
                 formProps.valueManager.setErrors(_errors);
             }, 500)
         }
@@ -240,9 +242,11 @@ return {
             <div>
                 <div className={`playground ${collapsableCode ? "collapsableCode" : ""}`}>
                     <div className={`playgroundCode ${this.state.expandedCode ? " expandedCode" : ""}`}>
-                        {this.state.expandedCode ? this.renderEditor(editorCode) : null }
+                        <ReactCSSReplaceTransition key="transition" {...this.props.rollUp}>
+                            {this.state.expandedCode ? this.renderEditor(editorCode) : <span key="no-show"/> }
+                        </ReactCSSReplaceTransition>
                     </div>
-                    {this.state.error ?<div className="error">
+                    {this.state.error ? <div className="error">
                         {this.state.error}
                     </div> : null}
                     {this.renderToggle()}

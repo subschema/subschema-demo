@@ -1,11 +1,10 @@
-/* eslint new-cap:0, no-unused-vars:0, no-invalid-this:0, no-undef:0 */
 "use strict";
 
 import React, {Component} from "react";
 import {PropTypes} from 'Subschema';
+
 import jsjs from 'codemirror/mode/javascript/javascript';
 import xml from 'codemirror/mode/xml/xml';
-
 import jsx from 'codemirror-jsx';
 
 export default class Editor extends Component {
