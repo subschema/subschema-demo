@@ -6,7 +6,7 @@ import Subschema, {PropTypes, Form, ValueManager, loaderFactory, DefaultLoader, 
 import cloneDeep from 'lodash/lang/cloneDeep';
 import ExampleLess from './Example.lessp';
 import each from 'lodash/collection/each';
-import {samples} from 'subschema-test-support';
+import samples from '../samples';
 import DownloadButton from './DownloadButton.jsx';
 import UninjectedSubschemaPlayground from './SubschemaPlayground.jsx';
 export default class Example extends Component {

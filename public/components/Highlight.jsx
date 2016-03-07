@@ -1,7 +1,7 @@
 "use strict";
-import React, {Component} from 'react';
+import React  from 'react';
 
-export default class Highlight extends Component {
+export default class Highlight extends React.Component {
     render() {
         var lang = this.props.lang;
         if (lang === 'html') lang = 'xml';

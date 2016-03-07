@@ -2,7 +2,7 @@
 
 import React from 'react';
 import Highlight from '../components/Highlight';
-import {samples} from 'subschema-test-support';
+import samples from '../samples';
 
 export default function Loader() {
     return (<div>

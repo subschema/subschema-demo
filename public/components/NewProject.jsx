@@ -1,25 +1,28 @@
 "use strict";
 import React, {Component} from 'react';
-import {Form, ValueManager, decorators, loader, loaderFactory, PropTypes, NewChildContext} from 'Subschema';
+import {Form, ValueManager, decorators, loader, loaderFactory, PropTypes} from 'Subschema';
 import DownloadButton from './DownloadButton.jsx';
-import samples from 'subschema-test-support/samples';
+import samples from '../samples';
 import camelCase from 'lodash/string/camelCase';
 import kebabCase from 'lodash/string/kebabCase';
 import capitalize from 'lodash/string/capitalize';
 import validateNpmPkgName from 'validate-npm-package-name'
 
 const {Basic} = samples;
-const {listen} = decorators;
 
 const schema = {
     schema: {
         name: {
             type: 'Text',
-            validators: ['required','npm_validate']
+            validators: ['required', 'npm_validate']
         },
         description: {
             type: 'TextArea',
             validators: ['required']
+        },
+        "buttons": {
+            type: "UpdateValue",
+            template: false
         }
     }
 };
@@ -43,19 +46,26 @@ projectLoader.addValidator({
         }
     }
 });
-
 class UpdateValue extends Component {
-    @listen("value", "name")
+    static propTypes = {
+        filename: PropTypes.value,
+        description: PropTypes.value
+    };
+
+    static defaultProps = {
+        filename: "name",
+        description: "description"
+    };
+
     name(name) {
         name = name || 'sample';
         this.setState({
-            jsName: camelCase(name),
-            filename: `${name}`,
-            name: name, title: capitalize(name.replace('-', ' '))
+            jsName: camelCase(filename),
+            filename: `${filename}`,
+            name: name, title: capitalize(filename.replace('-', ' '))
         });
     }
 
-    @listen("value", "description")
     description(description) {
         this.setState({
             description
@@ -63,37 +73,41 @@ class UpdateValue extends Component {
     }
 
     render() {
-        const {filename, ...data} = this.state;
-        const {schema} = Basic;
-        data.schema = schema;
-        data.sample = {
-            schema,
-            description: this.state.description
+        let {filename, description} = this.props;
+        filename = filename || 'simple';
+
+        const {...copy} = Basic;
+        const data = {
+            jsName: camelCase(filename),
+            name: filename,
+            title: capitalize(filename.replace('-', ' ')),
+            schema: copy,
+            sample: {
+                schema: copy,
+                description
+            }
         };
+
         return (<div className="btn-group">
             <DownloadButton filename={filename} data={data} type='project' key="project"/>
             <DownloadButton filename={filename} data={data} type='page' key="page" buttonTxtPage="Preview"/>
         </div>);
     }
 }
+projectLoader.addType({UpdateValue});
+
 
 export default class NewProject extends Component {
 
-    constructor(...args) {
-        super(...args);
-        this.valueManager = ValueManager();
-
-        this.state = {}
-    }
 
     handleSubmit = (e) => {
         e && e.preventDefault();
     };
 
     render() {
-        return (<Form schema={schema} onSubmit={this.handleSubmit} valueManager={this.valueManager} loader={projectLoader}>
-            <UpdateValue/>
-        </Form>);
+        return (
+            <Form schema={schema} onSubmit={this.handleSubmit} valueManager={this.valueManager} loader={projectLoader}/>
+        );
 
     }
 }

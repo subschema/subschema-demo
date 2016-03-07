@@ -26,28 +26,39 @@ module.exports = {
         publicPath: '/',
         port: 8082
     },
+    externals: {
+        'codemirror': 'CodeMirror',
+        'babel-standalone': 'Babel',
+/*        'react-dom-external': 'ReactDOM',
+        'react-external': 'React'*/
+    },
     resolve: {
         extensions: ['', '.jsx', '.js'],
         alias: {
             'fbjs': join('node_modules/fbjs'),
-            'react': join('node_modules/react'),
-            'react-dom': join('node_modules/react-dom'),
-            'ReactDOM': join('node_modules/react-dom'),
 
-            'react-addons-css-transition-group': join('node_modules/react-addons-css-transition-group'),
+             'react': join('node_modules/react'),
+             'react-dom': join('node_modules/react-dom'),
+             'ReactDOM': join('node_modules/react-dom'),
+             'react-addons-css-transition-group': join('node_modules/react-addons-css-transition-group'),
+            //external redirects so everything uses same react.
+/*
+            'ReactDOM': join('public/react'),
+            'react-dom': join('public/react-dom'),
+            'react': join('public/react'),
+            'react-addons-css-transition-group': join('public/react'),
+*/
+            'css-loader': join('node_modules/css-loader'),
             'Subschema': subschema,
-            subschema: path.join(subschema, '..'),
+             subschema: path.join(subschema, '..'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
-            'subschema-test-support': path.join(subschemaTest, 'index'),
-            'component-playground': join('node_modules/component-playground/src'),
-            'babylon':join('node_modules/babylon'),
-            'babel-template':join('node_modules/babel-template'),
-            'babel-traverse':join('node_modules/babel-traverse'),
-            'babel-runtime':join('node_modules/babel-runtime'),
-            'babel-types':join('node_modules/babel-types'),
-            'lodash':join('node_modules/lodash'),
-
-            //'subschema-styles': join('node_modules/subschema/src/styles'),
+            'subschema-test-support': path.join(subschemaTest),
+            'babylon': join('node_modules/babylon'),
+            'babel-template': join('node_modules/babel-template'),
+            'babel-traverse': join('node_modules/babel-traverse'),
+            'babel-runtime': join('node_modules/babel-runtime'),
+            'babel-types': join('node_modules/babel-types'),
+            'lodash': join('node_modules/lodash'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
         }
     },
@@ -78,8 +89,6 @@ module.exports = {
                 loader: 'babel',
                 exclude: [
                     /babel/,
-                    /babelyon/,
-                    /codemirror/,
                     /babylon/
                 ],
                 include: [
@@ -88,7 +97,6 @@ module.exports = {
                     path.join(subschemaProject, 'src'),
                     join('src'),
                     join('public'),
-                    join('node_modules/component-playground/src'),
                     isKarma ? join('test') : join('no_such_dir')
                 ]
             },
@@ -114,14 +122,15 @@ module.exports = {
 
             {
                 test: /\.lessp$/,
-                loader: 'style!css!'+AUTOPREFIXER_LOADER +'!less'
+                loader: 'style!css!' + AUTOPREFIXER_LOADER + '!less'
             }]
 
     },
     plugins: [
         new webpack.ProvidePlugin({
-            CodeMirror: "codemirror",
-            "window.CodeMirror": "codemirror"
+            'Babel': 'BabelStandalone',
+            CodeMirror: "public/codemirror",
+            "window.CodeMirror": "CodeMirror"
         })
     ]
 };

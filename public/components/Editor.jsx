@@ -2,10 +2,7 @@
 
 import React, {Component} from "react";
 import {PropTypes} from 'Subschema';
-
-import jsjs from 'codemirror/mode/javascript/javascript';
-import xml from 'codemirror/mode/xml/xml';
-import jsx from 'codemirror-jsx';
+import CodeMirror from 'codemirror';
 
 export default class Editor extends Component {
 

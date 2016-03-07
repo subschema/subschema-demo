@@ -1,13 +1,13 @@
 "use strict";
 import React, {Component} from 'react';
-import Subschema, {PropTypes, loaderFactory, Editor, DefaultLoader} from 'Subschema';
+import Subschema, {PropTypes, loaderFactory, resolvers, DefaultLoader} from 'Subschema';
 import map from 'lodash/collection/map';
 var loader = loaderFactory([DefaultLoader]);
 var {propTypesToNames} = PropTypes;
 var allPropTypes = {
     name: 'All Types',
     type: {
-        propTypes: Editor.fieldPropTypes
+        propTypes: resolvers.type.defaultPropTypes
     }
 }
 export default class DevelopTypes extends Component {
@@ -19,7 +19,7 @@ export default class DevelopTypes extends Component {
         return <tr key={`type-${i}`}>
             <td>{i}</td>
             <td>{key}</td>
-            <td>{def ? ''+def : ''}</td>
+            <td>{def ? '' + def : ''}</td>
         </tr>
     }
 
@@ -27,7 +27,11 @@ export default class DevelopTypes extends Component {
         const defaultProps = type.defaultProps || {};
         return <table className="table">
             <thead>
-            <tr><th>Property</th><th>Type</th><th>Default</th></tr>
+            <tr>
+                <th>Property</th>
+                <th>Type</th>
+                <th>Default</th>
+            </tr>
             </thead>
             <tbody>
             {map(propTypesToNames(type.propTypes), (p, n, type)=> this.renderPropType(p, n, defaultProps[p]), this)}
