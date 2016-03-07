@@ -76,7 +76,7 @@ class UpdateValue extends Component {
         let {filename, description} = this.props;
         filename = filename || 'simple';
 
-        const {...copy} = Basic;
+        const {...copy} = Basic.schema;
         const data = {
             jsName: camelCase(filename),
             name: filename,
