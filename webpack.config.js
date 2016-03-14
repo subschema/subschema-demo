@@ -50,7 +50,7 @@ module.exports = {
 */
             'css-loader': join('node_modules/css-loader'),
             'Subschema': subschema,
-             subschema: path.join(subschema, '..'),
+             subschema: path.join(subschema, '../dist/subschema-noreact'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
             'subschema-test-support': path.join(subschemaTest),
             'babylon': join('node_modules/babylon'),
@@ -117,6 +117,7 @@ module.exports = {
 
             {
                 test: /\.less$/,
+
                 loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!' + AUTOPREFIXER_LOADER + '!less'
             },
 

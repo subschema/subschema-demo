@@ -12,7 +12,7 @@ import LiLink from './components/LiLink.jsx';
 import Main from './components/Main.jsx';
 import Example from './components/Example.jsx';
 import Index from './Index.jsx';
-import sample from './sample.less';
+import sample from './sample.lessp';
 import history from './location';
 import NotFound from './components/NotFound.jsx';
 var loader = loaderFactory([DefaultLoader]);
