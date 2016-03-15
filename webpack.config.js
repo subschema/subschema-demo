@@ -29,28 +29,28 @@ module.exports = {
     externals: {
         'codemirror': 'CodeMirror',
         'babel-standalone': 'Babel',
-/*        'react-dom-external': 'ReactDOM',
-        'react-external': 'React'*/
+        /*        'react-dom-external': 'ReactDOM',
+         'react-external': 'React'*/
     },
     resolve: {
         extensions: ['', '.jsx', '.js'],
         alias: {
             'fbjs': join('node_modules/fbjs'),
 
-             'react': join('node_modules/react'),
-             'react-dom': join('node_modules/react-dom'),
-             'ReactDOM': join('node_modules/react-dom'),
-             'react-addons-css-transition-group': join('node_modules/react-addons-css-transition-group'),
+            'react': join('node_modules/react'),
+            'react-dom': join('node_modules/react-dom'),
+            'ReactDOM': join('node_modules/react-dom'),
+            'react-addons-css-transition-group': join('node_modules/react-addons-css-transition-group'),
             //external redirects so everything uses same react.
-/*
-            'ReactDOM': join('public/react'),
-            'react-dom': join('public/react-dom'),
-            'react': join('public/react'),
-            'react-addons-css-transition-group': join('public/react'),
-*/
+            /*
+             'ReactDOM': join('public/react'),
+             'react-dom': join('public/react-dom'),
+             'react': join('public/react'),
+             'react-addons-css-transition-group': join('public/react'),
+             */
             'css-loader': join('node_modules/css-loader'),
             'Subschema': subschema,
-             subschema: path.join(subschema, '../dist/subschema-noreact'),
+            'subschema-source':join('../subschema/dist'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
             'subschema-test-support': path.join(subschemaTest),
             'babylon': join('node_modules/babylon'),
@@ -58,7 +58,7 @@ module.exports = {
             'babel-traverse': join('node_modules/babel-traverse'),
             'babel-runtime': join('node_modules/babel-runtime'),
             'babel-types': join('node_modules/babel-types'),
-            'lodash': join('node_modules/lodash'),
+         //   'lodash': join('node_modules/lodash'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
         }
     },
