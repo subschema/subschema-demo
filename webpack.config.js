@@ -1,10 +1,7 @@
 "use strict";
 var webpack = require('webpack');
 var path = require('path'), join = path.join.bind(path, __dirname);
-var AUTOPREFIXER_LOADER = 'autoprefixer-loader?{browsers:[' +
-    '"Android 2.3", "Android >= 4", "Chrome >= 20", "Firefox >= 24", ' +
-    '"Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]}';
-
+var autoprefixer = require('autoprefixer');
 var lifecycle = process.env['npm_lifecycle_event'];
 var isPrepublish = lifecycle === 'prepublish' || lifecycle == 'dist' || lifecycle == 'demo';
 var isKarma = process.env['NODE_ENV'] === 'test';
@@ -15,6 +12,7 @@ var subschema =
     join('../subschema/src');
 var subschemaProject = join('../', 'subschema-project');
 var subschemaTest = join('../', 'subschema-test-support');
+var cssStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss';
 
 module.exports = {
     devtool: (isPrepublish ? '#source-map' : "#inline-source-map"),
@@ -35,32 +33,18 @@ module.exports = {
     resolve: {
         extensions: ['', '.jsx', '.js'],
         alias: {
+            //external redirects so everything uses same react.
             'fbjs': join('node_modules/fbjs'),
             'React': join('node_modules/react'),
             './React': join('node_modules/react'),
-
             'react': join('node_modules/react'),
             'react-dom': join('node_modules/react-dom'),
             'ReactDOM': join('node_modules/react-dom'),
             'react-addons-css-transition-group': join('node_modules/react-addons-css-transition-group'),
-            //external redirects so everything uses same react.
-            /*
-             'ReactDOM': join('public/react'),
-             'react-dom': join('public/react-dom'),
-             'react': join('public/react'),
-             'react-addons-css-transition-group': join('public/react'),
-             */
-            'css-loader': join('node_modules/css-loader'),
             'Subschema': subschema,
             'subschema-source': join('../subschema/dist'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
             'subschema-test-support': path.join(subschemaTest),
-            'babylon': join('node_modules/babylon'),
-            'babel-template': join('node_modules/babel-template'),
-            'babel-traverse': join('node_modules/babel-traverse'),
-            'babel-runtime': join('node_modules/babel-runtime'),
-            'babel-types': join('node_modules/babel-types'),
-            //   'lodash': join('node_modules/lodash'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
         }
     },
@@ -123,21 +107,27 @@ module.exports = {
             },
             {
                 test: /\.css$/,
-                loader: 'style!css!' + AUTOPREFIXER_LOADER
+                loader: 'style!css!postcss'
             },
 
             {
                 test: /\.less$/,
 
-                loader: 'style!css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!' + AUTOPREFIXER_LOADER + '!less'
+                loader: 'style!'+cssStr+'!less'
             },
 
             {
                 test: /\.lessp$/,
-                loader: 'style!css!' + AUTOPREFIXER_LOADER + '!less'
+                loader: 'style!css!postcss!less'
             }]
 
     },
+
+    postcss: [autoprefixer({
+        browsers: ["Android 2.3", "Android >= 4",
+            "Chrome >= 20", "Firefox >= 24",
+            "Explorer >= 8", "iOS >= 6", "Opera >= 12", "Safari >= 6"]
+    })],
     plugins: [
         new webpack.ProvidePlugin({
             'Babel': 'BabelStandalone',
