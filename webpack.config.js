@@ -36,6 +36,8 @@ module.exports = {
         extensions: ['', '.jsx', '.js'],
         alias: {
             'fbjs': join('node_modules/fbjs'),
+            'React': join('node_modules/react'),
+            './React': join('node_modules/react'),
 
             'react': join('node_modules/react'),
             'react-dom': join('node_modules/react-dom'),
@@ -50,7 +52,7 @@ module.exports = {
              */
             'css-loader': join('node_modules/css-loader'),
             'Subschema': subschema,
-            'subschema-source':join('../subschema/dist'),
+            'subschema-source': join('../subschema/dist'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
             'subschema-test-support': path.join(subschemaTest),
             'babylon': join('node_modules/babylon'),
@@ -58,7 +60,7 @@ module.exports = {
             'babel-traverse': join('node_modules/babel-traverse'),
             'babel-runtime': join('node_modules/babel-runtime'),
             'babel-types': join('node_modules/babel-types'),
-         //   'lodash': join('node_modules/lodash'),
+            //   'lodash': join('node_modules/lodash'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
         }
     },
@@ -69,6 +71,13 @@ module.exports = {
     module: {
         extensions: ['', '.jsx', '.js'],
         loaders: [
+            {
+                test: /\.md$/,
+                loader: '!!raw!',
+                include: [
+                    join('public/develop')
+                ]
+            },
             {
                 test: /\.tmpl$/,
                 loader: path.join(subschemaProject, 'tmpl-loader'),
@@ -89,7 +98,8 @@ module.exports = {
                 loader: 'babel',
                 exclude: [
                     /babel/,
-                    /babylon/
+                    /babylon/,
+                    /subschema-no-react/
                 ],
                 include: [
                     /subschema/,
@@ -106,6 +116,7 @@ module.exports = {
             {test: /\.ttf(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=application/octet-stream"},
             {test: /\.eot(\?v=\d+\.\d+\.\d+)?$/, loader: "file"},
             {test: /\.svg(\?v=\d+\.\d+\.\d+)?$/, loader: "url?limit=10000&mimetype=image/svg+xml"},
+
             {
                 test: /\.json$/,
                 loader: 'json'

@@ -3,7 +3,7 @@
 import React, {Component} from 'react';
 import {PropTypes} from 'Subschema';
 
-import UninjectedNewProject from './components/NewProject.jsx';
+import UninjectedNewProject from '../src/components/NewProject.jsx';
 
 export default class Index extends Component {
     static defaultProps = {

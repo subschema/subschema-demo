@@ -1,7 +1,5 @@
 import React, {Component} from 'react';
 import Subschema, {PropTypes} from 'Subschema';
-import Index from '../Index.jsx';
-import samples from '../samples';
 
 export default class Main extends Component {
 
@@ -26,25 +24,27 @@ export default class Main extends Component {
     };
 
     render() {
+
         if (this.props.value == null) {
             return null;
         }
+        const {loader} =this.context;
         const pathname = this.props.value;
         console.log('pathname', pathname);
         const type = pathname.replace(/\#?\//, '')
 
         let value;
         if (/develop/.test(pathname)) {
-            value = {component: type};
+            value = {component: loader.loadDoc(type.split('/')[1])};
         } else if (type) {
-            value = {component: 'Example', example: type, conf: samples[type]};
+            value = {component: 'Example', example: type, conf: loader.loadSample(type)};
         } else {
             value = {component: 'Index', conf: null};
         }
 
         let {component, ...rest} = value;
         if (component == null) return null;
-        let Component = this.context.loader.loadType(component);
+        let Component = (typeof component === 'function') ? component : loader.loadType(component);
         if (Component == null) {
             Component = this.props.notFound;
         }

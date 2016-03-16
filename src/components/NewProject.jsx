@@ -2,13 +2,10 @@
 import React, {Component} from 'react';
 import {Form, ValueManager, decorators, loader, loaderFactory, PropTypes} from 'Subschema';
 import DownloadButton from './DownloadButton.jsx';
-import samples from '../samples';
 import camelCase from 'lodash/string/camelCase';
 import kebabCase from 'lodash/string/kebabCase';
 import capitalize from 'lodash/string/capitalize';
 import validateNpmPkgName from 'validate-npm-package-name'
-
-const {Basic} = samples;
 
 const schema = {
     schema: {
@@ -49,12 +46,14 @@ projectLoader.addValidator({
 class UpdateValue extends Component {
     static propTypes = {
         filename: PropTypes.value,
-        description: PropTypes.value
+        description: PropTypes.value,
+
     };
 
     static defaultProps = {
         filename: "name",
-        description: "description"
+        description: "description",
+        sample: 'Basic'
     };
 
     name(name) {
@@ -73,10 +72,10 @@ class UpdateValue extends Component {
     }
 
     render() {
-        let {filename, description} = this.props;
+        let {filename, description, sample} = this.props;
         filename = filename || 'simple';
 
-        const {...copy} = Basic.schema;
+        const {...copy} = this.context.loader.loadSample(sample);
         const data = {
             jsName: camelCase(filename),
             name: filename,
