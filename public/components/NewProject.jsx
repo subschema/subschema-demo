@@ -22,7 +22,12 @@ const schema = {
         },
         "buttons": {
             type: "UpdateValue",
-            template: false
+            template: false,
+            conditional: {
+                listen: "name",
+                operator: "truthy",
+                transition: "rollUp"
+            }
         }
     }
 };
@@ -88,7 +93,7 @@ class UpdateValue extends Component {
             }
         };
 
-        return (<div className="btn-group">
+        return (<div className="btn-group clearfix">
             <DownloadButton filename={filename} data={data} type='project' key="project"/>
             <DownloadButton filename={filename} data={data} type='page' key="page" buttonTxtPage="Preview"/>
         </div>);

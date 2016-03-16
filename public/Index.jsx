@@ -5,6 +5,7 @@ import {PropTypes} from 'Subschema';
 
 import UninjectedNewProject from './components/NewProject.jsx';
 
+const seperator = ' | ';
 export default class Index extends Component {
     static defaultProps = {
         NewProject: UninjectedNewProject
@@ -16,33 +17,44 @@ export default class Index extends Component {
     render() {
         const {NewProject} = this.props;
         return (
-            <div className="jumbotron">
+            <div className="jumbotron clearfix">
                 <h1>Subschema</h1>
 
                 <p>This is app shows how to use Subschema</p>
 
-                <p>Wherever it shows <b>expand</b> you can click to see the code that geneated the form, and you can edit
+                <p>Wherever it shows <b>Show Example Code</b> you can click to see the code that geneated the form, and
+                    you can edit
                     the code in place,seeing the result immediately.</p>
 
-                <p>You can see how it works by loading <b>Errors</b> and <b>Data</b>, from the buttons up top</p>
+                <p>You can see how it works by loading <b>Errors</b> and <b>Data</b>, from the buttons up in the menu
+                    bar, or editing the code inline</p>
 
                 <p>Here are some ideas of things you can do with Subschema.</p>
                 <dl class="dl-horizontal">
+                    <dt>Todo built on Subschema with react-motion</dt>
+                    <dd>
+                        <a href="http://jspears.github.io/subschema-motion/">demo</a>{seperator}<a
+                        href="https://github.com/jspears/subschema-motion">repo</a>
+                    </dd>
                     <dt>Github OAuth Integration</dt>
                     <dd>
-                        <a href="https://subschema.github.io/subschema-github/">demo</a> | <a href="https://github.com/subschema/subschema-github/">repo</a>
+                        <a href="https://subschema.github.io/subschema-github/">demo</a>{seperator}<a
+                        href="https://github.com/subschema/subschema-github/">repo</a>
                     </dd>
                     <dt>Image Upload</dt>
                     <dd>
-                        <a href="https://subschema.github.io/subschema-image">demo</a> | <a href="https://github.com/subschema/subschema-image">repo</a>
+                        <a href="https://subschema.github.io/subschema-image">demo</a>{seperator}<a
+                        href="https://github.com/subschema/subschema-image">repo</a>
                     </dd>
                     <dt>Google Places Autocomplete</dt>
                     <dd>
-                        <a href="https://subschema.github.io/subschema-g-suggest">demo</a> | <a href="https://github.com/subschema/subschema-g-suggest">repo</a>
+                        <a href="https://subschema.github.io/subschema-g-suggest">demo</a>{seperator}<a
+                        href="https://github.com/subschema/subschema-g-suggest">repo</a>
                     </dd>
                     <dt>Project Generator</dt>
                     <dd>
-                        <a href="https://subschema.github.io/subschema-project/">demo</a> | <a href="https://github.com/subschema/subschema-g-suggest">repo</a>
+                        <a href="https://subschema.github.io/subschema-project/">demo</a>{seperator}<a
+                        href="https://github.com/subschema/subschema-g-suggest">repo</a>
                     </dd>
 
                 </dl>
