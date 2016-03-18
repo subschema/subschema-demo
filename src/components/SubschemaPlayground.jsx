@@ -1,11 +1,11 @@
 "use strict";
-import React, {Component} from 'react';
-import {Form, newSubschemaContext, PropTypes, ReactCSSReplaceTransition} from 'Subschema';
-import Editor from './Editor.jsx';
+import React, {Component} from "react";
+import {Form, newSubschemaContext, PropTypes, ReactCSSReplaceTransition} from "Subschema";
+import Editor from "./Editor.jsx";
 import {transform, availablePlugins} from "babel-standalone";
-import UninjectedDisplayValueAndErrors from './DisplayValueAndErrors.jsx';
+import UninjectedDisplayValueAndErrors from "./DisplayValueAndErrors.jsx";
 import transformLegacy from "babel-plugin-transform-decorators-legacy";
-import DownloadButton from './DownloadButton.jsx';
+import DownloadButton from "./DownloadButton.jsx";
 
 availablePlugins['transform-decorators-legacy'] = transformLegacy;
 
@@ -53,6 +53,9 @@ function map(obj, fn, scope) {
 
 }
 export default class SubschemaPlayground extends Component {
+    static contextTypes = {
+        defaultLoaders: PropTypes.array
+    };
     static propTypes = {
         collapsableCode: PropTypes.bool,
         theme: PropTypes.string,
@@ -103,7 +106,7 @@ export default class SubschemaPlayground extends Component {
 
     createEditorCode() {
         var code = '';
-        var {data, errors,useData, useError, schema} = this.props;
+        var {data, errors, useData, useError, schema} = this.props;
 
         if (useData) {
             code += `var value = ${stringify(this.props.data)};\n`;
@@ -120,7 +123,7 @@ export default class SubschemaPlayground extends Component {
 
     createFunction(editorCode) {
         var code = this.state.code;
-        const Subschema = newSubschemaContext();
+        const Subschema = newSubschemaContext(this.context.defaultLoaders);
         const {ValueManager, loader}  = Subschema;
         const valueManager = ValueManager(this.props.useData ? this.props.value : {});
         const {errors, value} = this.props;
@@ -219,7 +222,7 @@ return {
     }
 
     render() {
-        const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData,useError, filename } = this.props;
+        const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData, useError, filename} = this.props;
         const editorCode = this.createEditorCode();
         const formProps = this.createFunction(editorCode);
         const _errors = useError ? errors : null;

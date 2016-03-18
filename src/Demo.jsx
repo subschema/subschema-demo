@@ -1,20 +1,33 @@
 "use strict";
 
-import React, {Component} from 'react';
-import {Form, PropTypes, ValueManager} from 'Subschema';
-import history from './location';
+import React, {Component} from "react";
+import {Form, PropTypes, ValueManager, DefaultLoader} from "Subschema";
+import history from "./location";
 
 
 export default class Demo extends Component {
     static propTypes = {
         valueManager: PropTypes.valueManager,
         loader: PropTypes.loader,
-        schema: PropTypes.any
+        schema: PropTypes.any,
+        defaultLoaders: PropTypes.array
+    };
+
+    static childContextTypes = {
+        defaultLoaders: PropTypes.array
     };
 
     static defaultProps = {
-        valueManager: ValueManager()
+        valueManager: ValueManager(),
+        defaultLoaders: [DefaultLoader]
     };
+
+    getChildContext() {
+        const {defaultLoaders} = this.props;
+        return {
+            defaultLoaders
+        }
+    }
 
     componentDidMount() {
         let loc;
@@ -28,12 +41,12 @@ export default class Demo extends Component {
                 if (val) {
                     if (loc.query[path] === 'true') return;
                     loc.query[path] = 'true';
-                    var {pathname, query, state } = loc;
+                    var {pathname, query, state} = loc;
                     history.push({pathname, query, state});
                 } else {
                     if (loc.query[path] === 'true') {
                         delete loc.query[path];
-                        var {pathname, query, state } = loc;
+                        var {pathname, query, state} = loc;
                         history.push({pathname, query, state});
                     }
                 }
@@ -71,7 +84,8 @@ export default class Demo extends Component {
     }
 
     render() {
-        return <Form valueManager={this.props.valueManager} schema={this.props.schema} loader={this.props.loader} template="ObjectTemplate"/>
+        return <Form valueManager={this.props.valueManager} schema={this.props.schema} loader={this.props.loader}
+                     template="ObjectTemplate"/>
     }
 
 }
