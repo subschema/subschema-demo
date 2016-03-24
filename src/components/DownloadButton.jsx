@@ -48,7 +48,7 @@ export default class DownloadButton extends Component {
         var ext = this.props.type === 'project' ? 'zip' : 'html';
         var filename = kebabCase(this.props.filename);
         var blob = generate({
-            jsName: filename,
+            jsName: camelCase(filename),
             title: this.props.filename,
             project: {
                 name: kebabCase(this.props.filename),
@@ -56,8 +56,8 @@ export default class DownloadButton extends Component {
                 version: '1.0.0'
             },
             demo: {},
-            schema: sample.schema,
-            sample
+            sample,
+            ...sample
         }, this.props.type, `${ext}-blob`);
         if (isPage) {
             var url = URL.createObjectURL(blob), other = window.open(url);
