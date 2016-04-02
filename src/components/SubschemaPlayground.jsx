@@ -224,6 +224,7 @@ return {
         e && e.preventDefault();
         alert('form submit called');
     }
+   
     render() {
         const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData, useError, filename} = this.props;
         const editorCode = this.createEditorCode();
