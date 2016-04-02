@@ -220,7 +220,10 @@ return {
             </div>
         </div>
     }
-
+    handleSubmit(e, err, values){
+        e && e.preventDefault();
+        alert('form submit called');
+    }
     render() {
         const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData, useError, filename} = this.props;
         const editorCode = this.createEditorCode();
@@ -254,7 +257,7 @@ return {
                     </div> : null}
                     {this.renderToggle()}
                     <div className="playgroundPreview clearfix">
-                        <Form {...formProps}>
+                        <Form {...formProps} onSubmit={this::this.handleSubmit}>
                             <div style={{width:'100%', float:'left'}}>
                                 <DisplayValueAndErrors value="."/>
                             </div>
