@@ -10,9 +10,10 @@ import DownloadButton from "./DownloadButton.jsx";
 availablePlugins['transform-decorators-legacy'] = transformLegacy;
 
 const babelrc = {
-    presets: ["react", "es2015", "stage-0"],
-    plugins: [
-        "transform-decorators-legacy"
+    presets: [
+        "es2015-loose",
+        "react",
+        "stage-0"
     ]
 };
 
@@ -122,29 +123,34 @@ export default class SubschemaPlayground extends Component {
     }
 
     createFunction(editorCode) {
-        var code = this.state.code;
+        let code = this.state.code;
         const Subschema = newSubschemaContext(this.context.defaultLoaders);
         const {ValueManager, loader}  = Subschema;
         const valueManager = ValueManager(this.props.useData ? this.props.value : {});
         const {errors, value} = this.props;
         const {...schema} = this.props.schema;
+        let funcBody;
+
         try {
-            var func = new Function(['React', 'Component', 'Subschema', 'loader', 'valueManager', 'errors', 'value', 'schema'], `
+            funcBody = `
 
 ${transform(editorCode, babelrc).code}
 
 return {
-   loader,
-   schema,
-   valueManager
+   loader:loader,
+   schema:schema,
+   valueManager:valueManager
 };
-`);
+`;
+
+            const func = new Function(['React', 'Component', 'Subschema', 'loader', 'valueManager', 'errors', 'value', 'schema'], funcBody);
             var ret = func(React, Component, Subschema, loader, valueManager, errors, value, schema);
             this._compiled = func;
             this.state.error = null;
             return ret;
         } catch (e) {
-            this.handleError(e);
+            console.log('error', e, funcBody + '');
+            //   this.handleError(e);
         }
 
         if (this._compiled) {
@@ -220,11 +226,12 @@ return {
             </div>
         </div>
     }
-    handleSubmit(e, err, values){
+
+    handleSubmit(e, err, values) {
         e && e.preventDefault();
         alert('form submit called');
     }
-   
+
     render() {
         const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData, useError, filename} = this.props;
         const editorCode = this.createEditorCode();

@@ -17,9 +17,6 @@ var cssStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash
 module.exports = {
     devtool: (isPrepublish ? '#source-map' : "#inline-source-map"),
     devServer: {
-        noInfo: false,
-        hot: true,
-        inline: true,
         contentBase: join('public'),
         publicPath: '/',
         port: 8082

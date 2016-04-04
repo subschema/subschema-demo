@@ -1,11 +1,27 @@
 "use strict";
-import React, {Component, PropTypes} from 'react';
+import React, {Component, PropTypes} from "react";
+import {generate} from "subschema-project";
+import {saveAs} from "browser-filesaver";
+import camelCase from "lodash/string/camelCase";
+import kebabCase from "lodash/string/kebabCase";
 
-import {generate} from 'subschema-project';
-import {saveAs} from 'browser-filesaver';
-import camelCase from 'lodash/string/camelCase';
-import kebabCase from 'lodash/string/kebabCase';
+function openBlob(blob) {
+    if (window.navigator && window.navigator.msSaveOrOpenBlob) {
+        window.navigator.msSaveOrOpenBlob(blob);
+    } else {
+        var url = URL.createObjectURL(blob), other = window.open(url);
+        if (!other) {
+            alert("Looks like you have blockup popper");
+            return;
+        } else {
+            if (other.addEventListener) {
+                other.addEventListener('DOMContentLoaded', this.handleDone)
+                return;
+            }
+        }
+    }
 
+}
 export default class DownloadButton extends Component {
 
     static propTypes = {
@@ -60,16 +76,8 @@ export default class DownloadButton extends Component {
             ...sample
         }, this.props.type, `${ext}-blob`);
         if (isPage) {
-            var url = URL.createObjectURL(blob), other = window.open(url);
-            if (!other) {
-                alert("Looks like you have blockup popper");
-                return;
-            } else {
-                if (other.addEventListener) {
-                    other.addEventListener('DOMContentLoaded', this.handleDone)
-                    return;
-                }
-            }
+            openBlob(blob);
+            return;
         }
         try {
             saveAs(blob, `${this.props.filename}.${ext}`);
