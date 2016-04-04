@@ -9,7 +9,7 @@ function openBlob(blob) {
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(blob);
     } else {
-        var url = URL.createObjectURL(blob), other = window.open(url);
+        const url = URL.createObjectURL(blob), other = window.open(url);
         if (!other) {
             alert("Looks like you have blockup popper");
             return;

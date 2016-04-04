@@ -144,22 +144,36 @@ return {
 `;
 
             const func = new Function(['React', 'Component', 'Subschema', 'loader', 'valueManager', 'errors', 'value', 'schema'], funcBody);
-            var ret = func(React, Component, Subschema, loader, valueManager, errors, value, schema);
+            func(React, Component, Subschema, loader, valueManager, errors, value, schema);
             this._compiled = func;
             this.state.error = null;
-            return ret;
         } catch (e) {
             console.log('error', e, funcBody + '');
-            //   this.handleError(e);
+            this.handleError(e);
+            return
         }
 
         if (this._compiled) {
             try {
                 return this._compiled(React, Component, Subschema, loader, valueManager, errors, value, schema);
             } catch (e) {
+                console.log('error', e, funcBody + '');
+                this.handleError(e);
             }
         }
-        return {};
+        return;
+
+    }
+
+    invokeIfNeccessary(editorCode) {
+        if (editorCode != this._editorCode) {
+            this._editorCode = editorCode;
+            var invoked = this.createFunction(editorCode);
+            if (invoked) {
+                this._lastInvoked = invoked
+            }
+        }
+        return this._lastInvoked;
     }
 
     handleError(e) {
@@ -235,7 +249,7 @@ return {
     render() {
         const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData, useError, filename} = this.props;
         const editorCode = this.createEditorCode();
-        const formProps = this.createFunction(editorCode);
+        const formProps = this.invokeIfNeccessary(editorCode);
         const _errors = useError ? errors : null;
         const _data = useData ? value : {};
 

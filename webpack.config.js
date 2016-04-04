@@ -83,8 +83,9 @@ module.exports = {
                     /subschema-no-react/
                 ],
                 include: [
-                    /subschema\//,
                     subschemaTest,
+                    subschema,
+                    /subschema-injection\/src/,
                     path.join(subschemaProject, 'src'),
                     join('src'),
                     join('public'),
