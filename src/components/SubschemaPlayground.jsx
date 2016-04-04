@@ -4,10 +4,8 @@ import {Form, newSubschemaContext, PropTypes, ReactCSSReplaceTransition} from "S
 import Editor from "./Editor.jsx";
 import {transform, availablePlugins} from "babel-standalone";
 import UninjectedDisplayValueAndErrors from "./DisplayValueAndErrors.jsx";
-import transformLegacy from "babel-plugin-transform-decorators-legacy";
 import DownloadButton from "./DownloadButton.jsx";
 
-availablePlugins['transform-decorators-legacy'] = transformLegacy;
 
 const babelrc = {
     presets: [
