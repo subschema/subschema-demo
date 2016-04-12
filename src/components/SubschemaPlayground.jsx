@@ -74,7 +74,8 @@ export default class SubschemaPlayground extends Component {
         DisplayValueAndErrors: PropTypes.injectClass,
         useData: PropTypes.bool,
         useError: PropTypes.bool,
-        rollUp: PropTypes.transition
+        rollUp: PropTypes.transition,
+        onSubmit: PropTypes.valueEvent
 
     };
 
@@ -89,6 +90,7 @@ export default class SubschemaPlayground extends Component {
         collapseTxt: "Hide Example Code",
         initiallyExpanded: false,
         filename: 'example',
+        onSubmit: "submit",
         onChange(){
         },
         DisplayValueAndErrors: UninjectedDisplayValueAndErrors
@@ -239,10 +241,10 @@ return {
         </div>
     }
 
-    handleSubmit(e, err, values) {
+    handleSubmit = (e, err, values)=> {
         e && e.preventDefault();
-        alert('form submit called');
-    }
+        this.props.onSubmit(values);
+    };
 
     render() {
         const {DisplayValueAndErrors, collapsableCode, schema, errors, value, useData, useError, filename} = this.props;
