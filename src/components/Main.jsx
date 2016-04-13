@@ -1,6 +1,6 @@
-import React, {Component} from 'react';
-import Subschema, {PropTypes} from 'Subschema';
-
+import React, {Component} from "react";
+import {PropTypes} from "Subschema";
+import style from "./Main.less";
 export default class Main extends Component {
 
     static contextTypes = {
@@ -12,14 +12,16 @@ export default class Main extends Component {
         useData: PropTypes.listener,
         useError: PropTypes.listener,
         notFound: PropTypes.type,
-        value: PropTypes.value
+        value: PropTypes.value,
+        transition: PropTypes.transition
     };
 
     static defaultProps = {
         useData: "useData",
         useError: "useError",
         notFound: "NotFound",
-        value: "pathname"
+        value: "pathname",
+        transition: "slideRight"
 
     };
 
@@ -49,7 +51,12 @@ export default class Main extends Component {
             Component = this.props.notFound;
         }
         let IComponent = this.context.injector.inject(Component);
-        return <IComponent {...this.props} {...rest}/>
-
+        const {transition, ...props} = this.props;
+        const {Transition, ...transitionprops} = transition;
+        return (<Transition {...transitionprops}>
+            <div key={`${pathname}-comp`} className={style.main}>
+                <IComponent  {...props} {...rest}/>
+            </div>
+        </Transition>);
     }
 }
