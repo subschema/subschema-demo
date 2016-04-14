@@ -50,7 +50,7 @@ export default class Main extends Component {
         if (Component == null) {
             Component = this.props.notFound;
         }
-        let IComponent = this.context.injector.inject(Component);
+        const IComponent = this.context.injector.inject(Component);
         const {transition, ...props} = this.props;
         const {Transition, ...transitionprops} = transition;
         return (<Transition {...transitionprops}>
