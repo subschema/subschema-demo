@@ -2,7 +2,7 @@
 #This script publishes the current p
 DIR=${PWD##*/}
 GH_DIR="../subschema-gh-pages"
-GH_REPO="https://github.com/subschema/subschema.git"
+GH_REPO="git@github.com:subschema/subschema.git"
 
 OPWD=$PWD
 HASH=

@@ -30,7 +30,12 @@ export default class Index extends Component {
                     bar, or editing the code inline</p>
 
                 <p>Here are some ideas of things you can do with Subschema.</p>
-                <dl className="dl-horizontal">
+                <dl>
+                    <dt>3rd party component integration</dt>
+                    <dd>
+                        <a href="https://subschema.github.io/subschema-external-component-example">demo</a>{seperator}<a
+                        href="https://github.com/subschema/subschema-external-component-example">repo</a>
+                    </dd>
                     <dt>Todo built on Subschema with react-motion</dt>
                     <dd>
                         <a href="http://jspears.github.io/subschema-motion/">demo</a>{seperator}<a
