@@ -3,7 +3,7 @@
 import React, {Component} from "react";
 import {Form, PropTypes, ValueManager, DefaultLoader} from "Subschema";
 import history from "./location";
-
+import "./sample.lessp";
 
 export default class Demo extends Component {
     static propTypes = {
