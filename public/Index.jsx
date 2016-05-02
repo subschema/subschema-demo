@@ -64,7 +64,7 @@ export default class Index extends Component {
 
                 </dl>
 
-                <p><a className="btn btn-primary btn-lg" href="https://github.com/subschema" role="button">Learn
+                <p><a className="btn btn-primary btn-lg" href="https://github.com/subschema/subschema/wiki" role="button">Learn
                     more</a></p>
                 <hr/>
                 <p>Or you can create a brand new project</p>

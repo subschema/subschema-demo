@@ -19,11 +19,7 @@
       "template": false,
       "href": "#/{.}"
     },
-    "develop": {
-      "type": "Navigate",
-      "template": false,
-      "href": "#/develop/{.}"
-    },
+
     "main": {
       "type": "Main",
       "template": false
@@ -72,9 +68,6 @@
                 {
                   "legend": "Develop",
                   "template": "H3"
-                },
-                {
-                  "fields": "develop"
                 }
               ]
             },
