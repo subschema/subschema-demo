@@ -1,9 +1,9 @@
 "use strict";
-import React, {Component} from 'react';
-import {PropTypes} from 'Subschema';
-import camelCase from 'lodash/string/camelCase';
-import capitalize from 'lodash/string/capitalize';
-import DownloadButton from './DownloadButton.jsx';
+import React, {Component} from "react";
+import {PropTypes} from "Subschema";
+import camelCase from "lodash/string/camelCase";
+import capitalize from "lodash/string/capitalize";
+import DownloadButton from "./DownloadButton.jsx";
 
 export default class UpdateValue extends Component {
     static contextTypes = {
@@ -12,6 +12,7 @@ export default class UpdateValue extends Component {
     static propTypes = {
         filename: PropTypes.value,
         description: PropTypes.value,
+
 
     };
 
@@ -40,16 +41,12 @@ export default class UpdateValue extends Component {
         let {filename, description, sample} = this.props;
         filename = filename || 'simple';
 
-        const {...copy} = this.context.loader.loadSample(sample);
+        sample = this.context.loader.loadSample(sample);
         const data = {
             jsName: camelCase(filename),
             name: filename,
             title: capitalize(filename.replace('-', ' ')),
-            schema: copy,
-            sample: {
-                schema: copy,
-                description
-            }
+            sample
         };
 
         return (<div className="btn-group">

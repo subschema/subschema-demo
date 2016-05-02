@@ -5,9 +5,10 @@ import {saveAs} from "browser-filesaver";
 import camelCase from "lodash/string/camelCase";
 import kebabCase from "lodash/string/kebabCase";
 
-function openBlob(blob) {
+function openBlob(blob, handleDone) {
     if (window.navigator && window.navigator.msSaveOrOpenBlob) {
         window.navigator.msSaveOrOpenBlob(blob);
+        handleDone && handleDone();
     } else {
         const url = URL.createObjectURL(blob), other = window.open(url);
         if (!other) {
@@ -15,7 +16,7 @@ function openBlob(blob) {
             return;
         } else {
             if (other.addEventListener) {
-                other.addEventListener('DOMContentLoaded', this.handleDone)
+                other.addEventListener('DOMContentLoaded', handleDone)
                 return;
             }
         }
@@ -52,18 +53,13 @@ export default class DownloadButton extends Component {
     handleClick = (e) => {
         e && e.preventDefault();
         this.setState({busy: true});
-        const {errors, value, ...sample} = this.props.data;
-        if (this.props.useData) {
-            sample.value = value;
-        }
-        if (this.props.useErrors) {
-            sample.errors = errors;
-        }
-
+        const {errors, value, sample} = this.props.data;
+        sample.data = this.props.useData ? value : {};
+        sample.errors = this.props.useErrors ? errors : {};
         var isPage = this.props.type === 'page';
         var ext = this.props.type === 'project' ? 'zip' : 'html';
         var filename = kebabCase(this.props.filename);
-        var blob = generate({
+        const data = {
             jsName: camelCase(filename),
             title: this.props.filename,
             project: {
@@ -71,12 +67,12 @@ export default class DownloadButton extends Component {
                 description: sample.description,
                 version: '1.0.0'
             },
-            demo: {},
-            sample,
-            ...sample
-        }, this.props.type, `${ext}-blob`);
+            demo:{},
+            sample
+        };
+        var blob = generate(data, this.props.type, `${ext}-blob`);
         if (isPage) {
-            openBlob(blob);
+            openBlob(blob, this.handleDone);
             return;
         }
         try {

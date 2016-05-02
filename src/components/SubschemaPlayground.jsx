@@ -287,9 +287,9 @@ return {
                     </div>
                 </div>
                 <div className='btn-group'>
-                    <DownloadButton type="page" useData={useData} useError={useError} data={sample}
+                    <DownloadButton type="page" useData={useData} useError={useError} data={{sample}}
                                     filename={filename}/>
-                    <DownloadButton type="project" useData={useData} useError={useError} data={sample}
+                    <DownloadButton type="project" useData={useData} useError={useError} data={{sample}}
                                     filename={filename}/>
                 </div>
 
