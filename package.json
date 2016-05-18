@@ -30,7 +30,7 @@
     "file-loader": "^0.8.5",
     "history": "^2.0.1",
     "json-loader": "^0.5.3",
-    "jszip": "^3.0.0",
+    "jszip": "^2.6.0",
     "karma": "^0.13.22",
     "karma-chrome-launcher": "^1.0.1",
     "karma-cli": "^1.0.0",
@@ -68,7 +68,7 @@
     "demo-debug": "NODE_ENV=production webpack  --display-modules --output-path .build --entry ./public/app.jsx --output-filename=app.[hash].debug.js --config ./webpack.config.js",
     "dist": "NODE_ENV=production webpack --display-modules -p --output-path dist --entry ./src/index.js --output-library-target=umd --output-library-name=SubschemaDemo --output-filename=index.js --config ./webpack.config.js",
     "dist-debug": "NODE_ENV=production webpack --display-modules -p --output-path dist --entry ./src/index.js --output-library-target=umd --output-library-name=SubschemaDemo --output-filename=index.debug.js --config ./webpack.config.js",
-    "prepublish": "npm run demo"
+    "preversion": "npm run demo"
   },
   "author": "Justin Spears",
   "license": "ISC"

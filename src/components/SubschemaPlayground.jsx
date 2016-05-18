@@ -257,6 +257,11 @@ return {
             setupTxt: this.state.code,
             schema,
             data: _data,
+            props: Object.keys(formProps).reduce((obj, v)=> {
+                if (v == 'schema' || v == 'valueManager') return obj;
+                    obj[v] = true;
+                return obj;
+            }, {}),
             errors: _errors,
             description: this.props.description
         };
