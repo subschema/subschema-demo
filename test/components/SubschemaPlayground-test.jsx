@@ -1,6 +1,6 @@
 "use strict";
 import React from 'react';
-import SubschemaPlayground from '../../public/components/SubschemaPlayground.jsx';
+import SubschemaPlayground from '../../src/components/SubschemaPlayground.jsx';
 import {into} from 'subschema-test-support';
 import expect from 'expect';
 import samples from 'subschema-test-support/samples';
