@@ -9,7 +9,7 @@ var isTestDist = lifecycle === 'test-dist';
 var subschema =
     //join('../subschema/dist/subschema-noreact.js');
     //join('node_modules/subschema/dist/subschema-noreact.js');
-    join('../subschema/src');
+    join('..', 'subschema', 'src');
 var subschemaProject = join('../', 'subschema-project');
 var subschemaTest = join('../', 'subschema-test-support');
 var cssStr = 'css?modules&importLoaders=1&localIdentName=[name]__[local]___[hash:base64:5]!postcss';
@@ -42,7 +42,8 @@ module.exports = {
             'subschema-source': join('../subschema/dist'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
             'subschema-test-support': path.join(subschemaTest),
-            'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js')
+            'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js'),
+            'ValueManager': path.join(subschema, 'ValueManager')
         }
     },
     stats: {
@@ -111,7 +112,7 @@ module.exports = {
             {
                 test: /\.less$/,
 
-                loader: 'style!'+cssStr+'!less'
+                loader: 'style!' + cssStr + '!less'
             },
 
             {
