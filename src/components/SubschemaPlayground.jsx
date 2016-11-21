@@ -68,7 +68,7 @@ export default class SubschemaPlayground extends Component {
         setupTxt: PropTypes.string.isRequired,
         value: PropTypes.any,
         errors: PropTypes.any,
-        formProps: PropTypes.object,
+        formProps: PropTypes.oneOfType([PropTypes.object,PropTypes.arrayOf(PropTypes.string)]),
         onChange: PropTypes.func,
         filename: PropTypes.string,
         DisplayValueAndErrors: PropTypes.injectClass,

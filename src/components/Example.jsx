@@ -1,12 +1,7 @@
 "use strict";
 
 import React, {Component} from 'react';
-import ReactDOM from 'react-dom';
-import Subschema, {PropTypes, Form, ValueManager, loaderFactory, DefaultLoader, decorators} from 'Subschema';
-import cloneDeep from 'lodash/lang/cloneDeep';
-import ExampleLess from './Example.lessp';
-import each from 'lodash/collection/each';
-import DownloadButton from './DownloadButton.jsx';
+import {PropTypes, Form, ValueManager, loaderFactory, DefaultLoader, decorators} from 'Subschema';
 import UninjectedSubschemaPlayground from './SubschemaPlayground.jsx';
 export default class Example extends Component {
 
@@ -14,19 +9,19 @@ export default class Example extends Component {
 
     static propTypes = {
         example: PropTypes.string,
-        SubschemaPlayground:PropTypes.injectClass,
-        conf:PropTypes.any,
-        useData:PropTypes.bool,
-        useError:PropTypes.bool
+        SubschemaPlayground: PropTypes.injectClass,
+        conf: PropTypes.any,
+        useData: PropTypes.bool,
+        useError: PropTypes.bool
     };
     static defaultProps = {
-        SubschemaPlayground:UninjectedSubschemaPlayground
+        SubschemaPlayground: UninjectedSubschemaPlayground
     };
 
     render() {
         return <div>
             <h3>{this.props.example}</h3>
-            <p>{this.props.conf.description}</p>
+            <p>{this.props.conf && this.props.conf.description}</p>
             {this.renderEdit()}
 
         </div>
@@ -35,10 +30,10 @@ export default class Example extends Component {
 
     renderEdit() {
         const {SubschemaPlayground, conf} = this.props;
-        const {schema, setup, setupTxt, props,description,data,errors} =conf;
+        const {schema, setup, setupTxt, props, description, data, errors} =conf || {};
         const formProps = props || {};
         return <div className='sample-example-playground'>
-            <SubschemaPlayground key={'form-'+this.props.example}
+            <SubschemaPlayground key={'form-' + this.props.example}
                                  theme='monokai'
                                  expandTxt="Show Example Code"
                                  collapseTxt="Hide Example Code"

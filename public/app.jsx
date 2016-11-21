@@ -5,7 +5,7 @@ import {ValueManager, Form, decorators, loaderFactory, loader}  from 'Subschema'
 import devel from '../src/index';
 import Index from './Index.jsx';
 import Demo from '../src/Demo.jsx';
-import samples from './samples';
+import samples from 'subschema-test-samples';
 import schema from './schema.json';
 
 loader.addLoader(devel);
