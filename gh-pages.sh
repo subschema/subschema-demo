@@ -37,20 +37,19 @@ function build(){
 
 function init_git() {
    echo "Initing git"
-   ORIGIN=$(git remote show -n $GH_REPO | grep Fetch | sed 's,.*Fetch URL:,,') && \
-   mkdir $GH_DIR &&\
-   cd $GH_DIR &&\
-   git init && \
-   git remote add origin $ORIGIN && \
-   git checkout -b $GH_BRANCH
+   git clone ${GH_REPO} $GH_DIR
 }
 
+function ask() {
+    read -p "$1 [Y]" dp;
+    RET=1;
+    case $dp in
+	    y|Y)  RET=0;;
+    esac
+    return $RET;
+}
 
 [ ! -d $GH_DIR ] && init_git
 
-build && check && \
-read -p "Do you want to push[y|Y]" dp;
-case $dp in
-	y|Y) push;;
-	*) echo "Don't forget to publish"; exit 0;;
-esac
+build && check && ask "Do you want to push" && push || echo "Don't forget to publish";
+exit 0;
