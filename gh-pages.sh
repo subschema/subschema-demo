@@ -2,7 +2,8 @@
 #This script publishes the current p
 DIR=${PWD##*/}
 GH_DIR="../subschema-gh-pages"
-GH_REPO="git@github.com:subschema/subschema.git"
+GH_REPO="git@github.com:subschema/subschema.github.io.git"
+GH_BRANCH="master"
 
 OPWD=$PWD
 HASH=
@@ -18,8 +19,8 @@ function push(){
     cd $GH_DIR && \
 	git add -A && \
 	git commit -a -m "Updated hash ${HASH}" && \
-	git push origin gh-pages && \
-	echo "gh-pages now running $HASH "
+	git push origin $GH_BRANCH && \
+	echo "$GH_BRANCH now running $HASH "
 }
 
 function build(){
@@ -41,14 +42,13 @@ function init_git() {
    cd $GH_DIR &&\
    git init && \
    git remote add origin $ORIGIN && \
-   git checkout -b gh-pages
+   git checkout -b $GH_BRANCH
 }
 
 
 [ ! -d $GH_DIR ] && init_git
 
-build && \
-check
+build && check && \
 read -p "Do you want to push[y|Y]" dp;
 case $dp in
 	y|Y) push;;

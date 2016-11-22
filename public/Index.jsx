@@ -59,9 +59,17 @@ export default class Index extends Component {
                     <dt>Project Generator</dt>
                     <dd>
                         <a href="https://subschema.github.io/subschema-project/">demo</a>{seperator}<a
-                        href="https://github.com/subschema/subschema-g-suggest">repo</a>
+                        href="https://github.com/subschema/subschema-project">repo</a>
                     </dd>
-
+                    <dt>Redux Integration</dt>
+                    <dd>
+                        In Progress {seperator}
+                        <a href="https://github.com/subschema/subschema-redux">repo</a>
+                    </dd>
+                    <dt>Blueprintjs Integration</dt>
+                    <dd>
+                        In Progress {seperator}  <a href="https://github.com/subschema/subschema-blueprint">repo</a>
+                    </dd>
                 </dl>
 
                 <p><a className="btn btn-primary btn-lg" href="https://github.com/subschema/subschema/wiki" role="button">Learn
