@@ -42,7 +42,7 @@ module.exports = {
             'subschema-source': join('../subschema/dist'),
             'subschema-project': path.join(subschemaProject, 'src/index.js'),
             'subschema-test-support': path.join(subschemaTest),
-            'subschema-test-samples':join('..', 'subschema-test-samples', 'samples.js'),
+            //       'subschema-test-samples':join('..', 'subschema-test-samples', 'samples.js'),
             'subschema-demo': isTestDist ? join('dist/index.js') : join('src/index.js'),
             'ValueManager': path.join(subschema, 'ValueManager')
         }
